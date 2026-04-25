@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}EduPath - Career Guidance{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/theme-dark.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ============ PASTEL LIGHT PURPLE THEME ============ */
+        :root {
+            --primary-dark: #e7dbff; /* soft lavender */
+            --primary-darker: #d1bfff; /* slightly deeper lavender */
+            --secondary-dark: #f3efff; /* pale lilac */
+            --accent-blue: #c7aef7; /* soft purple accent */
+            --accent-light: #efe6ff; /* very light purple */
+            --accent-cyan: #d6c8ff; /* pale lilac-cyan */
+            --text-light: #2e1e46; /* dark text for readability on light background */
+            --text-white: #ffffff;
+            --text-gray: #6b5f7a;
+            --border-dark: rgba(150,120,220,0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--secondary-dark) 50%, var(--primary-darker) 100%);
+            min-height: 100vh;
+            color: var(--text-light);
+        }
+
+        /* Navbar */
+        nav {
+            background: rgba(255, 255, 255, 0.85);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 2rem;
+            border-bottom: 1px solid var(--border-dark);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: fit-content;
+        }
+
+        nav .logo i {
+            font-size: 2rem;
+            color: var(--accent-blue);
+            text-shadow: 0 4px 12px rgba(160,120,255,0.06);
+        }
+
+        nav .logo-link {
+            font-size: 1.5rem !important;
+            font-weight: 900 !important;
+            color: #1a1a2e !important;
+            letter-spacing: 2px !important;
+            text-transform: uppercase !important;
+            white-space: nowrap !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            position: static !important;
+        }
+
+        nav .logo-link::after {
+            display: none !important;
+        }
+
+        nav .logo-link:hover {
+            color: var(--accent-blue) !important;
+        }
+
+        nav .logo-text {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: #1a1a2e;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        nav .logo-text a {
+            color: #1a1a2e;
+            text-decoration: none;
+            font-weight: 900;
+        }
+
+        nav .logo-text a:hover {
+            color: var(--accent-blue);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-cyan);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* Unify navbar buttons: use filled primary pill style */
+        nav .btn,
+        nav .btn-nav,
+        nav .btn-about {
+            padding: 0.65rem 1.4rem;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-darker) 100%);
+            color: white;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: all 0.25s ease;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        nav .btn:hover,
+        nav .btn-nav:hover,
+        nav .btn-about:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(160,120,255,0.12);
+            opacity: 0.98;
+        }
+
+        /* Remove underline from button nav links */
+        nav .btn::after,
+        nav .btn-nav::after,
+        nav .btn-about::after {
+            display: none;
+        }
+
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--primary-darker) 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(160, 120, 255, 0.14);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(74, 144, 226, 0.6);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent-light);
+            border: 2px solid var(--accent-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent-light);
+            color: var(--primary-dark);
+            box-shadow: 0 4px 15px rgba(123, 179, 255, 0.4);
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(230, 220, 255, 0.6);
+            border: 1px solid var(--border-dark);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(120, 90, 170, 0.06);
+            transition: all 0.3s ease;
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 12px 48px rgba(74, 144, 226, 0.2);
+        }
+
+        .card h2, .card h3, .card h4 {
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+        }
+
+        .card p {
+            color: var(--text-gray);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(15, 7, 41, 0.95);
+            color: var(--text-light);
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-dark);
+        }
+
+        footer p {
+            color: var(--text-gray);
+        }
+
+        footer a {
+            color: var(--accent-light);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: all 0.3s ease;
+        }
+
+        footer a:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+        }
+
+        /* Main content area */
+        main {
+            flex: 1;
+        }
+
+        /* Alert messages */
+        .alert {
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert-error {
+            background: rgba(239, 68, 68, 0.1);
+            color: #fca5a5;
+            border-left-color: #ef4444;
+        }
+
+        .alert-success {
+            background: rgba(34, 197, 94, 0.1);
+            color: #86efac;
+            border-left-color: #22c55e;
+        }
+
+        .alert-info {
+            background: rgba(59, 130, 246, 0.1);
+            color: #93c5fd;
+            border-left-color: #3b82f6;
+        }
+
+        .alert-warning {
+            background: rgba(234, 179, 8, 0.1);
+            color: #fcd34d;
+            border-left-color: #eab308;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+            }
+
+            nav a {
+                font-size: 0.85rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            nav .auth-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            nav .btn-login, nav .btn-quiz {
+                width: 100%;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">
+            <i class="fas fa-graduation-cap"></i>
+            <a href="{% if is_logged_in %}{{ url_for('dashboard') }}{% else %}{{ url_for('landing') }}{% endif %}" class="logo-link">edupath</a>
+        </div>
+        <ul>
+            <li>
+                {% if is_logged_in %}
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-nav">Dashboard</a>
+                {% else %}
+                    <a href="{{ url_for('landing') }}" class="btn btn-nav">Home</a>
+                {% endif %}
+            </li>
+            {% if is_logged_in %}
+                <li><a href="{{ url_for('colleges') }}" class="btn btn-nav">Colleges</a></li>
+                <li><a href="{{ url_for('quiz') }}" class="btn btn-nav">Retake Quiz</a></li>
+            {% endif %}
+            <li><a href="{{ url_for('about') }}" class="btn btn-nav">About</a></li>
+        </ul>
+        <div class="auth-buttons">
+            {% if is_logged_in %}
+                <span style="margin-right: 1rem; color: var(--accent-300);">Welcome, {{ user_name }}!</span>
+                <a href="/logout" class="btn btn-quiz">Logout</a>
+            {% else %}
+                <a href="/login" class="btn btn-login">Login</a>
+                <a href="/signup" class="btn btn-quiz">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 EduPath - Career Guidance Platform. All rights reserved.</p>
+        <div>
+            <a href="{{ url_for('career_paths') }}">Career Paths</a>
+            <a href="/privacy">Privacy</a>
+            <a href="/contact">Contact</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/api-client.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
+</html>

@@ -1,0 +1,922 @@
+{
+    "colleges": [
+        {
+            "name": "Indian Institute of Technology Jammu",
+            "college_type": "Engineering",
+            "city": "Jammu",
+            "state": "Jammu & Kashmir",
+            "established_year": 2015,
+            "affiliation": "Central Government",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "B.Tech",
+            "duration_years": 4,
+            "total_fees": 900000,
+            "admission_type": "JEE Advanced",
+            "cutoff_percentage": 95.0,
+            "branches": [
+                "Computer Science & Engineering",
+                "Electrical Engineering",
+                "Mechanical Engineering",
+                "Civil Engineering",
+                "Chemical Engineering",
+                "Materials Engineering"
+            ],
+            "facilities": [
+                "Hostel",
+                "Library",
+                "Labs",
+                "WiFi",
+                "Sports Complex"
+            ],
+            "contact_phone": "+91-194-2272200",
+            "contact_email": "registrar@iitjammu.ac.in",
+            "website": "https://www.iitjammu.ac.in",
+            "description": "National Institute for engineering education and research"
+        },
+        {
+            "name": "National Institute of Technology Srinagar",
+            "college_type": "Engineering",
+            "city": "Srinagar",
+            "state": "Jammu & Kashmir",
+            "established_year": 1948,
+            "affiliation": "Central Government (NIT)",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "B.Tech",
+            "duration_years": 4,
+            "total_fees": 550000,
+            "admission_type": "JEE Main",
+            "cutoff_percentage": 85.0,
+            "branches": [
+                "Civil",
+                "Mechanical",
+                "Electrical",
+                "Electronics & Communication",
+                "Computer Science",
+                "Chemical",
+                "Metallurgical",
+                "IT"
+            ],
+            "facilities": [
+                "Hostel",
+                "Library",
+                "Labs",
+                "WiFi",
+                "Sports Complex",
+                "Cafeteria"
+            ],
+            "contact_phone": "+91-194-2282000",
+            "contact_email": "registrar@nitsrinagar.net.in",
+            "website": "https://www.nitsrinagar.net.in",
+            "description": "Prestigious National Institute of Technology in Kashmir Valley"
+        },
+        {
+            "name": "Government College of Engineering & Technology Jammu",
+            "college_type": "Engineering",
+            "city": "Jammu",
+            "state": "Jammu & Kashmir",
+            "established_year": 2003,
+            "affiliation": "University of Jammu",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "B.Tech",
+            "duration_years": 4,
+            "total_fees": 250000,
+            "admission_type": "JEE Main + J&K Counselling",
+            "cutoff_percentage": 70.0,
+            "branches": [
+                "Civil",
+                "Mechanical",
+                "Electrical",
+                "Electronics & Communication",
+                "Computer Science"
+            ],
+            "facilities": [
+                "Hostel",
+                "Library",
+                "Labs",
+                "WiFi",
+                "Cafeteria"
+            ],
+            "contact_phone": "+91-191-2430666",
+            "contact_email": "registrar@gcetjammu.edu.in",
+            "website": "https://www.gcetjammu.edu.in",
+            "description": "Premier government engineering college in Jammu"
+        },
+        {
+            "name": "Government College of Engineering & Technology Safapora",
+            "college_type": "Engineering",
+            "city": "Ganderbal",
+            "state": "Jammu & Kashmir",
+            "established_year": 2007,
+            "affiliation": "University of Kashmir",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "B.Tech",
+            "duration_years": 4,
+            "total_fees": 250000,
+            "admission_type": "JEE Main",
+            "cutoff_percentage": 68.0,
+            "branches": [
+                "Civil",
+                "Mechanical",
+                "Electrical",
+                "Electronics & Communication",
+                "Computer Science"
+            ],
+            "facilities": [
+                "Hostel",
+                "Library",
+                "Labs",
+                "WiFi"
+            ],
+            "contact_phone": "+91-194-2403000",
+            "contact_email": "registrar@gcetsafapora.edu.in",
+            "website": "https://www.gcetsafapora.edu.in",
+            "description": "Government engineering college in Kashmir Valley"
+        },
+        {
+            "name": "Shri Mata Vaishno Devi University",
+            "college_type": "Engineering",
+            "city": "Katra",
+            "state": "Jammu & Kashmir",
+            "established_year": 2003,
+            "affiliation": "State University",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "B.Tech",
+            "duration_years": 4,
+            "total_fees": 500000,
+            "admission_type": "JEE Main",
+            "cutoff_percentage": 75.0,
+            "branches": [
+                "CSE",
+                "ECE",
+                "Mechanical",
+                "Electrical",
+                "Civil",
+                "Biotechnology"
+            ],
+            "facilities": [
+                "Hostel",
+                "Library",
+                "Labs",
+                "WiFi",
+                "Sports Complex",
+                "Temple"
+            ],
+            "contact_phone": "+91-1991-260100",
+            "contact_email": "admissions@smvdu.ac.in",
+            "website": "https://www.smvdu.ac.in",
+            "description": "Private state university with excellent facilities"
+        },
+        {
+            "name": "Islamic University of Science & Technology",
+            "college_type": "Engineering",
+            "city": "Awantipora",
+            "state": "Jammu & Kashmir",
+            "established_year": 2010,
+            "affiliation": "State University",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "B.Tech",
+            "duration_years": 4,
+            "total_fees": 450000,
+            "admission_type": "JEE Main",
+            "cutoff_percentage": 72.0,
+            "branches": [
+                "CSE",
+                "ECE",
+                "Mechanical",
+                "Civil",
+                "Electrical"
+            ],
+            "facilities": [
+                "Hostel",
+                "Library",
+                "Labs",
+                "WiFi",
+                "Cafeteria"
+            ],
+            "contact_phone": "+91-1933-255062",
+            "contact_email": "admissions@iust.edu.in",
+            "website": "https://www.iust.edu.in",
+            "description": "Modern engineering university with advanced labs"
+        },
+        {
+            "name": "University Institute of Engineering & Technology (UIET) Jammu",
+            "college_type": "Engineering",
+            "city": "Jammu",
+            "state": "Jammu & Kashmir",
+            "established_year": 1995,
+            "affiliation": "University of Jammu",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "B.Tech",
+            "duration_years": 4,
+            "total_fees": 350000,
+            "admission_type": "JEE Main",
+            "cutoff_percentage": 70.0,
+            "branches": [
+                "CSE",
+                "ECE",
+                "Mechanical",
+                "Civil",
+                "Electrical"
+            ],
+            "facilities": [
+                "Hostel",
+                "Library",
+                "Labs",
+                "WiFi"
+            ],
+            "contact_phone": "+91-191-2433266",
+            "contact_email": "uiet@jammuuniversity.ac.in",
+            "website": "https://www.jammuuniversity.ac.in",
+            "description": "University engineering institute with quality education"
+        },
+        {
+            "name": "Baba Ghulam Shah Badshah University",
+            "college_type": "Engineering",
+            "city": "Rajouri",
+            "state": "Jammu & Kashmir",
+            "established_year": 2006,
+            "affiliation": "State University",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "B.Tech",
+            "duration_years": 4,
+            "total_fees": 450000,
+            "admission_type": "University Admission",
+            "cutoff_percentage": 65.0,
+            "branches": [
+                "CSE",
+                "ECE",
+                "Civil",
+                "Mechanical"
+            ],
+            "facilities": [
+                "Hostel",
+                "Library",
+                "Labs",
+                "WiFi"
+            ],
+            "contact_phone": "+91-1961-243000",
+            "contact_email": "registrar@bgsbuniversity.ac.in",
+            "website": "https://www.bgsbuniversity.ac.in",
+            "description": "State university in Rajouri district"
+        },
+        {
+            "name": "Government College of Education Jammu",
+            "college_type": "B.Ed",
+            "city": "Jammu",
+            "state": "Jammu & Kashmir",
+            "established_year": 1985,
+            "affiliation": "University of Jammu",
+            "streams": [
+                "Arts",
+                "Science"
+            ],
+            "degree_type": "B.Ed",
+            "duration_years": 2,
+            "total_fees": 35000,
+            "admission_type": "J&K B.Ed Entrance / Counselling",
+            "cutoff_percentage": 55.0,
+            "branches": [
+                "Educational Psychology",
+                "Curriculum & Teaching",
+                "Educational Technology",
+                "School Management",
+                "Assessment & Evaluation"
+            ],
+            "facilities": [
+                "Library",
+                "Practice School",
+                "Computer Lab",
+                "Cafeteria"
+            ],
+            "contact_phone": "+91-191-2245000",
+            "contact_email": "admin@gcejammu.edu.in",
+            "website": "https://www.gcejammu.edu.in",
+            "description": "Premier government teacher education college in Jammu"
+        },
+        {
+            "name": "Government College of Education (Girls) Jammu",
+            "college_type": "B.Ed",
+            "city": "Jammu",
+            "state": "Jammu & Kashmir",
+            "established_year": 1990,
+            "affiliation": "University of Jammu",
+            "streams": [
+                "Arts",
+                "Science"
+            ],
+            "degree_type": "B.Ed",
+            "duration_years": 2,
+            "total_fees": 35000,
+            "admission_type": "J&K B.Ed Entrance",
+            "cutoff_percentage": 55.0,
+            "branches": [
+                "Teaching Methodology",
+                "Educational Psychology",
+                "Guidance & Counseling",
+                "Practice Teaching"
+            ],
+            "facilities": [
+                "Library",
+                "Practice School",
+                "Computer Lab"
+            ],
+            "contact_phone": "+91-191-2235000",
+            "contact_email": "admin@gcejammugirls.edu.in",
+            "website": "https://www.gcejammugirls.edu.in",
+            "description": "Government girls teacher education college"
+        },
+        {
+            "name": "Government College of Education Srinagar",
+            "college_type": "B.Ed",
+            "city": "Srinagar",
+            "state": "Jammu & Kashmir",
+            "established_year": 1982,
+            "affiliation": "University of Kashmir",
+            "streams": [
+                "Arts",
+                "Science"
+            ],
+            "degree_type": "B.Ed",
+            "duration_years": 2,
+            "total_fees": 35000,
+            "admission_type": "J&K B.Ed Entrance",
+            "cutoff_percentage": 55.0,
+            "branches": [
+                "Teaching Methodology",
+                "Educational Psychology",
+                "Curriculum Development",
+                "Guidance & Counseling",
+                "Practice Teaching"
+            ],
+            "facilities": [
+                "Library",
+                "Practice School",
+                "Computer Lab",
+                "Cafeteria"
+            ],
+            "contact_phone": "+91-194-2205000",
+            "contact_email": "admin@gcesrinagar.edu.in",
+            "website": "https://www.gcesrinagar.edu.in",
+            "description": "Government teacher education college in Srinagar"
+        },
+        {
+            "name": "Teacher Education College Ganderbal",
+            "college_type": "B.Ed",
+            "city": "Ganderbal",
+            "state": "Jammu & Kashmir",
+            "established_year": 1998,
+            "affiliation": "University of Kashmir",
+            "streams": [
+                "Arts",
+                "Science"
+            ],
+            "degree_type": "B.Ed",
+            "duration_years": 2,
+            "total_fees": 30000,
+            "admission_type": "State B.Ed Entrance",
+            "cutoff_percentage": 50.0,
+            "branches": [
+                "Educational Psychology",
+                "Pedagogy",
+                "Curriculum Studies",
+                "Assessment & Evaluation"
+            ],
+            "facilities": [
+                "Library",
+                "Practice School",
+                "Computer Lab"
+            ],
+            "contact_phone": "+91-194-2803000",
+            "contact_email": "admin@tecganderbal.edu.in",
+            "website": "https://www.tecganderbal.edu.in",
+            "description": "Government teacher education college in Ganderbal"
+        },
+        {
+            "name": "Department of Pharmaceutical Sciences, University of Kashmir",
+            "college_type": "Pharmacy",
+            "city": "Srinagar",
+            "state": "Jammu & Kashmir",
+            "established_year": 1995,
+            "affiliation": "University of Kashmir",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "B.Pharm",
+            "duration_years": 4,
+            "total_fees": 180000,
+            "admission_type": "Merit Based + Entrance",
+            "cutoff_percentage": 70.0,
+            "branches": [
+                "Pharmaceutics",
+                "Pharmacology",
+                "Pharmaceutical Chemistry",
+                "Pharmaceutical Analysis",
+                "Pharmacognosy"
+            ],
+            "facilities": [
+                "Labs",
+                "Library",
+                "Research Centre",
+                "Hostel"
+            ],
+            "contact_phone": "+91-194-2440000",
+            "contact_email": "pharmacy@kashmiruniversity.ac.in",
+            "website": "https://www.kashmiruniversity.ac.in",
+            "description": "Government pharmacy college with PCI approval"
+        },
+        {
+            "name": "Department of Law - University of Jammu",
+            "college_type": "Law",
+            "city": "Jammu",
+            "state": "Jammu & Kashmir",
+            "established_year": 1975,
+            "affiliation": "University of Jammu",
+            "streams": [
+                "Commerce",
+                "Arts"
+            ],
+            "degree_type": "LL.B / B.A. LL.B",
+            "duration_years": 3,
+            "total_fees": 150000,
+            "admission_type": "JUET / State Entrance",
+            "cutoff_percentage": 60.0,
+            "branches": [
+                "Constitutional Law",
+                "Criminal Law",
+                "Corporate Law",
+                "Property Law",
+                "International Law"
+            ],
+            "facilities": [
+                "Library",
+                "Moot Court",
+                "Computer Lab",
+                "Cafeteria"
+            ],
+            "contact_phone": "+91-191-2430000",
+            "contact_email": "law@jammuuniversity.ac.in",
+            "website": "https://www.jammuuniversity.ac.in",
+            "description": "BCI approved law department with quality legal education"
+        },
+        {
+            "name": "Department of Law - University of Kashmir",
+            "college_type": "Law",
+            "city": "Srinagar",
+            "state": "Jammu & Kashmir",
+            "established_year": 1973,
+            "affiliation": "University of Kashmir",
+            "streams": [
+                "Commerce",
+                "Arts"
+            ],
+            "degree_type": "LL.B / B.A. LL.B",
+            "duration_years": 3,
+            "total_fees": 150000,
+            "admission_type": "State Entrance",
+            "cutoff_percentage": 60.0,
+            "branches": [
+                "Criminal Law",
+                "Constitutional Law",
+                "Corporate Law",
+                "Environmental Law",
+                "International Law"
+            ],
+            "facilities": [
+                "Library",
+                "Moot Court",
+                "Legal Aid Centre",
+                "Computer Lab"
+            ],
+            "contact_phone": "+91-194-2432000",
+            "contact_email": "law@kashmiruniversity.ac.in",
+            "website": "https://www.kashmiruniversity.ac.in",
+            "description": "Prestigious law department approved by Bar Council of India"
+        },
+        {
+            "name": "School of Legal Studies - Central University of Kashmir",
+            "college_type": "Law",
+            "city": "Srinagar",
+            "state": "Jammu & Kashmir",
+            "established_year": 2009,
+            "affiliation": "Central University",
+            "streams": [
+                "Commerce",
+                "Arts"
+            ],
+            "degree_type": "B.A. LL.B",
+            "duration_years": 5,
+            "total_fees": 300000,
+            "admission_type": "CUET / CLAT",
+            "cutoff_percentage": 75.0,
+            "branches": [
+                "Constitutional Law",
+                "Corporate Law",
+                "Public International Law",
+                "Environmental Law"
+            ],
+            "facilities": [
+                "Library",
+                "Moot Court",
+                "Legal Research Centre",
+                "Hostel"
+            ],
+            "contact_phone": "+91-194-2431000",
+            "contact_email": "law@cukashmir.ac.in",
+            "website": "https://www.cukashmir.ac.in",
+            "description": "Central university law school with national standards"
+        },
+        {
+            "name": "Government Degree College Jammu - BCA",
+            "college_type": "BCA",
+            "city": "Jammu",
+            "state": "Jammu & Kashmir",
+            "established_year": 2000,
+            "affiliation": "University of Jammu",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "BCA",
+            "duration_years": 3,
+            "total_fees": 35000,
+            "admission_type": "Merit Based",
+            "cutoff_percentage": 55.0,
+            "branches": [
+                "C Programming",
+                "C++",
+                "Java",
+                "Data Structures",
+                "DBMS",
+                "Operating Systems",
+                "Computer Networks",
+                "Web Technologies"
+            ],
+            "facilities": [
+                "Computer Labs",
+                "Library",
+                "Internet",
+                "Cafeteria"
+            ],
+            "contact_phone": "+91-191-2340000",
+            "contact_email": "bca@gdcjammu.edu.in",
+            "website": "https://www.gdcjammu.edu.in",
+            "description": "Government college offering BCA degree"
+        },
+        {
+            "name": "Government Degree College Udhampur - BCA",
+            "college_type": "BCA",
+            "city": "Udhampur",
+            "state": "Jammu & Kashmir",
+            "established_year": 2005,
+            "affiliation": "University of Jammu",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "BCA",
+            "duration_years": 3,
+            "total_fees": 35000,
+            "admission_type": "Merit Based",
+            "cutoff_percentage": 50.0,
+            "branches": [
+                "Programming Languages",
+                "Networking",
+                "DBMS",
+                "Web Development",
+                "Software Engineering"
+            ],
+            "facilities": [
+                "Computer Labs",
+                "Library",
+                "WiFi",
+                "Cafeteria"
+            ],
+            "contact_phone": "+91-1952-273000",
+            "contact_email": "bca@gdcudhampur.edu.in",
+            "website": "https://www.gdcudhampur.edu.in",
+            "description": "Government college in Udhampur offering BCA"
+        },
+        {
+            "name": "Government Degree College Rajouri - BCA",
+            "college_type": "BCA",
+            "city": "Rajouri",
+            "state": "Jammu & Kashmir",
+            "established_year": 2008,
+            "affiliation": "University of Jammu",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "BCA",
+            "duration_years": 3,
+            "total_fees": 30000,
+            "admission_type": "Merit Based",
+            "cutoff_percentage": 50.0,
+            "branches": [
+                "Programming + Networking + DBMS",
+                "Software Development",
+                "Web Technologies"
+            ],
+            "facilities": [
+                "Computer Labs",
+                "Library",
+                "Internet"
+            ],
+            "contact_phone": "+91-1961-243000",
+            "contact_email": "bca@gdcrajouri.edu.in",
+            "website": "https://www.gdcrajouri.edu.in",
+            "description": "Government college in Rajouri with BCA program"
+        },
+        {
+            "name": "Government Degree College Baramulla - BCA",
+            "college_type": "BCA",
+            "city": "Baramulla",
+            "state": "Jammu & Kashmir",
+            "established_year": 2006,
+            "affiliation": "University of Kashmir",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "BCA",
+            "duration_years": 3,
+            "total_fees": 30000,
+            "admission_type": "Merit Based",
+            "cutoff_percentage": 50.0,
+            "branches": [
+                "Computer Application",
+                "Programming",
+                "Networking",
+                "Database Systems"
+            ],
+            "facilities": [
+                "Computer Labs",
+                "Library",
+                "WiFi"
+            ],
+            "contact_phone": "+91-1942-255000",
+            "contact_email": "bca@gdcbaramulla.edu.in",
+            "website": "https://www.gdcbaramulla.edu.in",
+            "description": "Government college in Baramulla offering BCA"
+        },
+        {
+            "name": "Government Degree College Anantnag - BCA",
+            "college_type": "BCA",
+            "city": "Anantnag",
+            "state": "Jammu & Kashmir",
+            "established_year": 2007,
+            "affiliation": "University of Kashmir",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "BCA",
+            "duration_years": 3,
+            "total_fees": 30000,
+            "admission_type": "Merit Based",
+            "cutoff_percentage": 48.0,
+            "branches": [
+                "Programming",
+                "DBMS",
+                "OS",
+                "Web Technologies",
+                "Networking"
+            ],
+            "facilities": [
+                "Computer Labs",
+                "Library",
+                "WiFi"
+            ],
+            "contact_phone": "+91-1932-227000",
+            "contact_email": "bca@gdcanantnag.edu.in",
+            "website": "https://www.gdcanantnag.edu.in",
+            "description": "Government college in Anantnag with BCA degree"
+        },
+        {
+            "name": "Government Degree College Sopore - BCA",
+            "college_type": "BCA",
+            "city": "Sopore",
+            "state": "Jammu & Kashmir",
+            "established_year": 2009,
+            "affiliation": "University of Kashmir",
+            "streams": [
+                "Science"
+            ],
+            "degree_type": "BCA",
+            "duration_years": 3,
+            "total_fees": 30000,
+            "admission_type": "Merit Based",
+            "cutoff_percentage": 50.0,
+            "branches": [
+                "Computer Application",
+                "Programming & Database",
+                "Networking",
+                "Web Technology"
+            ],
+            "facilities": [
+                "Computer Labs",
+                "Library",
+                "WiFi"
+            ],
+            "contact_phone": "+91-1954-235000",
+            "contact_email": "bca@gdcsopore.edu.in",
+            "website": "https://www.gdcsopore.edu.in",
+            "description": "Government college in Sopore offering full-time BCA"
+        },
+        {
+            "name": "Government Degree College Jammu - B.A.",
+            "college_type": "Arts",
+            "city": "Jammu",
+            "state": "Jammu & Kashmir",
+            "established_year": 1950,
+            "affiliation": "University of Jammu",
+            "streams": [
+                "Arts"
+            ],
+            "degree_type": "B.A.",
+            "duration_years": 3,
+            "total_fees": 30000,
+            "admission_type": "Merit Based",
+            "cutoff_percentage": 50.0,
+            "branches": [
+                "English",
+                "Hindi",
+                "Urdu",
+                "Dogri",
+                "Sanskrit",
+                "Political Science",
+                "History",
+                "Sociology",
+                "Economics",
+                "Education",
+                "Psychology",
+                "Philosophy",
+                "Geography",
+                "Public Administration"
+            ],
+            "facilities": [
+                "Library",
+                "Computer Lab",
+                "Cafeteria",
+                "Sports"
+            ],
+            "contact_phone": "+91-191-2340000",
+            "contact_email": "admin@gdcjammu.edu.in",
+            "website": "https://www.gdcjammu.edu.in",
+            "description": "Government degree college in Jammu offering diverse B.A. subjects"
+        },
+        {
+            "name": "Government Degree College Udhampur - B.A.",
+            "college_type": "Arts",
+            "city": "Udhampur",
+            "state": "Jammu & Kashmir",
+            "established_year": 1975,
+            "affiliation": "University of Jammu",
+            "streams": [
+                "Arts"
+            ],
+            "degree_type": "B.A.",
+            "duration_years": 3,
+            "total_fees": 25000,
+            "admission_type": "Merit Based",
+            "cutoff_percentage": 48.0,
+            "branches": [
+                "English",
+                "Hindi",
+                "Urdu",
+                "Political Science",
+                "History",
+                "Sociology",
+                "Economics",
+                "Geography",
+                "Education"
+            ],
+            "facilities": [
+                "Library",
+                "Computer Lab",
+                "Cafeteria"
+            ],
+            "contact_phone": "+91-1952-273000",
+            "contact_email": "admin@gdcudhampur.edu.in",
+            "website": "https://www.gdcudhampur.edu.in",
+            "description": "Government college in Udhampur with Arts stream"
+        },
+        {
+            "name": "Government Degree College Rajouri - B.A.",
+            "college_type": "Arts",
+            "city": "Rajouri",
+            "state": "Jammu & Kashmir",
+            "established_year": 1980,
+            "affiliation": "University of Jammu",
+            "streams": [
+                "Arts"
+            ],
+            "degree_type": "B.A.",
+            "duration_years": 3,
+            "total_fees": 25000,
+            "admission_type": "Merit Based",
+            "cutoff_percentage": 48.0,
+            "branches": [
+                "English",
+                "Hindi",
+                "Urdu",
+                "Political Science",
+                "History",
+                "Sociology",
+                "Economics",
+                "Education"
+            ],
+            "facilities": [
+                "Library",
+                "Cafeteria"
+            ],
+            "contact_phone": "+91-1961-243000",
+            "contact_email": "admin@gdcrajouri.edu.in",
+            "website": "https://www.gdcrajouri.edu.in",
+            "description": "Government college in Rajouri offering B.A. degree"
+        },
+        {
+            "name": "Government Degree College Baramulla - B.A.",
+            "college_type": "Arts",
+            "city": "Baramulla",
+            "state": "Jammu & Kashmir",
+            "established_year": 1965,
+            "affiliation": "University of Kashmir",
+            "streams": [
+                "Arts"
+            ],
+            "degree_type": "B.A.",
+            "duration_years": 3,
+            "total_fees": 25000,
+            "admission_type": "Merit Based",
+            "cutoff_percentage": 50.0,
+            "branches": [
+                "English",
+                "Urdu",
+                "Arabic",
+                "Political Science",
+                "History",
+                "Sociology",
+                "Economics",
+                "Islamic Studies",
+                "Geography",
+                "Education"
+            ],
+            "facilities": [
+                "Library",
+                "Computer Lab",
+                "Cafeteria"
+            ],
+            "contact_phone": "+91-1942-255000",
+            "contact_email": "admin@gdcbaramulla.edu.in",
+            "website": "https://www.gdcbaramulla.edu.in",
+            "description": "Government college in Baramulla with diverse subjects"
+        },
+        {
+            "name": "Government Degree College Anantnag - B.A.",
+            "college_type": "Arts",
+            "city": "Anantnag",
+            "state": "Jammu & Kashmir",
+            "established_year": 1970,
+            "affiliation": "University of Kashmir",
+            "streams": [
+                "Arts"
+            ],
+            "degree_type": "B.A.",
+            "duration_years": 3,
+            "total_fees": 25000,
+            "admission_type": "Merit Based",
+            "cutoff_percentage": 48.0,
+            "branches": [
+                "English",
+                "Urdu",
+                "Arabic",
+                "Political Science",
+                "History",
+                "Sociology",
+                "Economics",
+                "Education",
+                "Geography"
+            ],
+            "facilities": [
+                "Library",
+                "Cafeteria"
+            ],
+            "contact_phone": "+91-1932-227000",
+            "contact_email": "admin@gdcanantnag.edu.in",
+            "website": "https://www.gdcanantnag.edu.in",
+            "description": "Government college in Anantnag offering B.A."
+        }
+    ]
+}

@@ -1,0 +1,629 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - EduPath{% endblock %}
+
+{% block extra_css %}
+<style>
+    .dashboard-wrapper {
+        padding: 3rem 2rem;
+    }
+
+    .dashboard-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 3rem;
+        border-radius: 15px;
+        margin-bottom: 3rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        animation: fadeInUp 0.6s ease;
+    }
+
+    .dashboard-header h1 {
+        color: white;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .user-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .info-card {
+        background: rgba(255, 255, 255, 0.12);
+        padding: 1.2rem;
+        border-radius: 12px;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        transition: all 0.3s ease;
+    }
+
+    .info-card:hover {
+        background: rgba(255, 255, 255, 0.18);
+        transform: translateY(-2px);
+    }
+
+    .info-card strong {
+        display: block;
+        font-size: 0.8rem;
+        opacity: 0.9;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+
+    .info-card span {
+        display: block;
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #ffffff;
+    }
+
+    .dashboard-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .action-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+        animation: fadeInUp 0.6s ease;
+        text-align: center;
+    }
+
+    .action-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .action-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .action-card h3 {
+        color: #1a1a2e;
+        margin-bottom: 0.5rem;
+    }
+
+    .action-card p {
+        color: #666;
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    .quick-links {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 0.7s ease;
+    }
+
+    .quick-links h2 {
+        color: #1a1a2e;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+    }
+
+    .links-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .link-item {
+        padding: 1.5rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: #1a1a2e;
+    }
+
+    .link-item:hover {
+        border-color: #667eea;
+        background: linear-gradient(135deg, #f8f9ff, #e5e9ff);
+        transform: translateX(5px);
+    }
+
+    .link-item strong {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #667eea;
+    }
+
+    .link-item p {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    @media (max-width: 768px) {
+        .dashboard-header {
+            padding: 2rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 1.8rem;
+        }
+
+        .user-info {
+            grid-template-columns: 1fr;
+        }
+
+        .dashboard-content {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    /* ============ COLLEGE PATH SECTION ============ */
+    .college-path-section {
+        background: linear-gradient(135deg, #2d1b69 0%, #1a0e47 100%);
+        border: 1px solid rgba(0, 217, 255, 0.2);
+        padding: 2.5rem;
+        border-radius: 16px;
+        margin-bottom: 3rem;
+        backdrop-filter: blur(10px);
+    }
+
+    .college-path-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2rem;
+    }
+
+    .college-path-header h2 {
+        font-size: 1.8rem;
+        color: #00d9ff;
+        margin: 0;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .change-college-btn {
+        background: rgba(0, 217, 255, 0.1);
+        border: 1px solid rgba(0, 217, 255, 0.3);
+        color: #00d9ff;
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .change-college-btn:hover {
+        background: rgba(0, 217, 255, 0.2);
+        border-color: #00d9ff;
+    }
+
+    .college-info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .college-info-item {
+        background: rgba(0, 217, 255, 0.08);
+        border: 1px solid rgba(0, 217, 255, 0.2);
+        padding: 1.5rem;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .college-info-item:hover {
+        background: rgba(0, 217, 255, 0.12);
+        border-color: rgba(0, 217, 255, 0.4);
+        transform: translateY(-2px);
+    }
+
+    .college-info-label {
+        color: #7bb3ff;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+    }
+
+    .college-info-value {
+        color: #00d9ff;
+        font-size: 1.3rem;
+        font-weight: 800;
+    }
+
+    .preparation-timeline {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 2rem;
+        border-radius: 12px;
+        border: 1px solid rgba(0, 217, 255, 0.15);
+    }
+
+    .timeline-title {
+        font-size: 1.3rem;
+        color: #00d9ff;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .timeline-item {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+
+    .timeline-item:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        left: 19px;
+        top: 60px;
+        height: 40px;
+        width: 2px;
+        background: linear-gradient(180deg, #00d9ff, rgba(0, 217, 255, 0.3));
+    }
+
+    .timeline-marker {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #00d9ff, #4a90e2);
+        color: white;
+        font-weight: 700;
+        flex-shrink: 0;
+        box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+    }
+
+    .timeline-content {
+        flex-grow: 1;
+        padding-top: 0.5rem;
+    }
+
+    .timeline-content h4 {
+        color: #00d9ff;
+        font-weight: 700;
+        margin-bottom: 0.35rem;
+    }
+
+    .timeline-content p {
+        color: #d4d9e8;
+        font-size: 0.95rem;
+        margin: 0;
+        line-height: 1.4;
+    }
+
+    .timeline-content .timeline-details {
+        margin-top: 0.75rem;
+        padding: 0.75rem;
+        background: rgba(0, 217, 255, 0.05);
+        border-left: 2px solid rgba(0, 217, 255, 0.3);
+        border-radius: 4px;
+        color: #7bb3ff;
+        font-size: 0.85rem;
+    }
+
+    .learning-resources {
+        margin-top: 2rem;
+        padding: 1.5rem;
+        background: rgba(0, 217, 255, 0.05);
+        border: 1px solid rgba(0, 217, 255, 0.2);
+        border-radius: 12px;
+    }
+
+    .resources-title {
+        color: #00d9ff;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .resources-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .resource-link {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        background: rgba(0, 217, 255, 0.1);
+        border: 1px solid rgba(0, 217, 255, 0.2);
+        border-radius: 8px;
+        color: #00d9ff;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .resource-link:hover {
+        background: rgba(0, 217, 255, 0.2);
+        border-color: #00d9ff;
+        transform: translateY(-2px);
+    }
+
+    .no-college-msg {
+        text-align: center;
+        padding: 2rem;
+        color: #7bb3ff;
+    }
+
+    .no-college-msg p {
+        margin-bottom: 1rem;
+    }
+
+    .no-college-msg .btn {
+        display: inline-block;
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-wrapper">
+    <!-- Welcome Header -->
+    <div class="dashboard-header">
+        <h1>👋 Welcome, {{ user.name }}!</h1>
+        <p>Your personalized career guidance portal</p>
+        
+        <div class="user-info">
+            <div class="info-card">
+                <strong>📚 Class</strong>
+                <span>{{ user.class_level }}</span>
+            </div>
+            <div class="info-card">
+                <strong>📍 City</strong>
+                <span>{{ user.city }}</span>
+            </div>
+            <div class="info-card">
+                <strong>🏛️ State</strong>
+                <span>{{ user.state }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Actions -->
+    <div class="dashboard-content">
+        <div class="action-card">
+            <div class="action-icon">🎯</div>
+            <h3>Take Quiz</h3>
+            <p>Discover your ideal career path based on aptitude and interest</p>
+            <a href="{{ url_for('quiz') }}" class="btn btn-primary">Start Quiz →</a>
+        </div>
+
+        <div class="action-card">
+            <div class="action-icon">📊</div>
+            <h3>Quiz Results</h3>
+            <p>View your quiz performance and college recommendations</p>
+            <a href="{{ url_for('result') }}" class="btn btn-primary">View Results →</a>
+        </div>
+
+        <div class="action-card">
+            <div class="action-icon">🏛️</div>
+            <h3>Find Colleges</h3>
+            <p>Explore top government colleges in your state and preferred stream</p>
+            <a href="{{ url_for('colleges') }}?city={{ user.city|lower }}" class="btn btn-primary">Explore Colleges →</a>
+        </div>
+
+        <div class="action-card">
+            <div class="action-icon">📖</div>
+            <h3>Career Paths</h3>
+            <p>Learn about different career options and salary expectations</p>
+            <a href="{{ url_for('career_paths') }}" class="btn btn-primary">Learn More →</a>
+        </div>
+
+        <div class="action-card">
+            <div class="action-icon">ℹ️</div>
+            <h3>About Us</h3>
+            <p>Learn more about EduPath and how we help students</p>
+            <a href="{{ url_for('about') }}" class="btn btn-primary">Read More →</a>
+        </div>
+    </div>
+
+    <!-- College Selection & Preparation Path -->
+    <div id="college-path-container">
+        {% if selected_college_name %}
+        <div class="college-path-section">
+            <div class="college-path-header">
+                <h2><i class="fas fa-graduation-cap"></i> Your College Journey</h2>
+                <a href="{{ url_for('colleges') }}" class="change-college-btn">
+                    <i class="fas fa-exchange-alt"></i> Change College
+                </a>
+            </div>
+
+            <!-- Selected College Info -->
+            <div class="college-info-grid">
+                <div class="college-info-item">
+                    <div class="college-info-label">🎓 Selected College</div>
+                    <div class="college-info-value">{{ selected_college_name }}</div>
+                </div>
+                <div class="college-info-item">
+                    <div class="college-info-label">🎯 Stream</div>
+                    <div class="college-info-value">{{ quiz_stream|title if quiz_stream else 'N/A' }}</div>
+                </div>
+                <div class="college-info-item">
+                    <div class="college-info-label">📋 Next Step</div>
+                    <div class="college-info-value">Prepare & Apply</div>
+                </div>
+            </div>
+
+            <!-- Preparation Timeline -->
+            <div class="preparation-timeline">
+                <div class="timeline-title">
+                    <i class="fas fa-road"></i> Your Preparation Roadmap
+                </div>
+
+                <!-- Month 1-3: Foundation -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h4>📚 Months 1-3: Foundation Building</h4>
+                        <p>Strengthen your core subject knowledge and concept clarity</p>
+                        <div class="timeline-details">
+                            <strong>📖 Focus Areas:</strong><br>
+                            {% if quiz_stream|lower == 'engineering' %}
+                            • Physics (Mechanics, Thermodynamics, Electromagnetism)<br>
+                            • Chemistry (Organic, Inorganic, Physical)<br>
+                            • Mathematics (Algebra, Calculus, Geometry)<br>
+                            • Study: NCERT, HC Verma, RD Sharma<br>
+                            • Time: 4-5 hours daily
+                            {% elif quiz_stream|lower == 'science' %}
+                            • Biology (Cell Biology, Genetics, Evolution)<br>
+                            • Chemistry (Organic & Inorganic)<br>
+                            • Physics (Mechanics & Electromagnetism)<br>
+                            • Study: NCERT, Campbell Biology, Pradeep's<br>
+                            • Time: 4 hours daily
+                            {% elif quiz_stream|lower == 'commerce' %}
+                            • Accounting fundamentals<br>
+                            • Business Studies basics<br>
+                            • Economics principles<br>
+                            • Study: NCERT books + reference guides<br>
+                            • Time: 3-4 hours daily
+                            {% elif quiz_stream|lower == 'arts' %}
+                            • History, Geography, Political Science<br>
+                            • Language skills (English & Regional)<br>
+                            • Social sciences concepts<br>
+                            • Study: NCERT, reference books<br>
+                            • Time: 3-4 hours daily
+                            {% else %}
+                            • Strengthen fundamental knowledge in your stream<br>
+                            • Build conceptual clarity<br>
+                            • Develop problem-solving skills<br>
+                            • Time: 4-5 hours daily
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Month 4-6: Practice -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h4>⚡ Months 4-6: Practice & Problem Solving</h4>
+                        <p>Solve previous year papers and take mock tests regularly</p>
+                        <div class="timeline-details">
+                            <strong>🎯 Actions:</strong><br>
+                            • Solve 20-30 questions daily per subject<br>
+                            • Take full-length mock tests every week<br>
+                            • Practice time management strategies<br>
+                            • Analyze weak areas and revise<br>
+                            • Join study groups or coaching (optional)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Month 7-8: Revision -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h4>🔄 Months 7-8: Revision & Refinement</h4>
+                        <p>Focused revision, doubt clearing, and final practice</p>
+                        <div class="timeline-details">
+                            <strong>✏️ Schedule:</strong><br>
+                            • Revise all important formulas & concepts<br>
+                            • Solve subject-wise practice questions<br>
+                            • Clear all doubts with teachers<br>
+                            • Take bi-weekly mock tests<br>
+                            • Focus on accuracy over speed
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Month 9-10: Exam Prep -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h4>🏆 Months 9-10: Final Exam Preparation</h4>
+                        <p>Last-minute preparation and confidence building</p>
+                        <div class="timeline-details">
+                            <strong>💪 Final Steps:</strong><br>
+                            • Daily mock tests (full-length)<br>
+                            • Revise high-weightage topics<br>
+                            • Practice last 5 years' papers<br>
+                            • Get adequate sleep (7-8 hours)<br>
+                            • Maintain positive mindset
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Admission -->
+                <div class="timeline-item">
+                    <div class="timeline-marker">5</div>
+                    <div class="timeline-content">
+                        <h4>🎉 Month 11: Admission & Selection</h4>
+                        <p>Apply for admission and complete the enrollment process</p>
+                        <div class="timeline-details">
+                            <strong>📋 Admission Steps:</strong><br>
+                            • Register for entrance exam (if applicable)<br>
+                            • Take the entrance exam<br>
+                            • Apply through college admission portal<br>
+                            • Complete counseling process<br>
+                            • Submit required documents<br>
+                            • Secure admission confirmation
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Learning Resources -->
+            <div class="learning-resources">
+                <div class="resources-title">
+                    <i class="fas fa-bookmark"></i> Recommended Learning Resources
+                </div>
+                <div class="resources-grid">
+                    <a href="https://www.youtube.com/results?search_query={{ quiz_stream|urlencode }}" target="_blank" class="resource-link">
+                        <i class="fas fa-video"></i> YouTube Lectures
+                    </a>
+                    <a href="https://www.khanacademy.org/" target="_blank" class="resource-link">
+                        <i class="fas fa-graduation-cap"></i> Khan Academy
+                    </a>
+                    <a href="https://www.ncert.nic.in/" target="_blank" class="resource-link">
+                        <i class="fas fa-book"></i> NCERT Books
+                    </a>
+                    <a href="https://www.vedantu.com/" target="_blank" class="resource-link">
+                        <i class="fas fa-chalkboard-teacher"></i> Vedantu
+                    </a>
+                    <a href="https://www.byju.s.com/" target="_blank" class="resource-link">
+                        <i class="fas fa-mobile-alt"></i> BYJU'S
+                    </a>
+                    <a href="https://unacademy.com/" target="_blank" class="resource-link">
+                        <i class="fas fa-play-circle"></i> Unacademy
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="college-path-section">
+            <div class="no-college-msg">
+                <h3 style="color: #00d9ff; margin-bottom: 1rem;">📍 No College Selected Yet</h3>
+                <p>Select a college from the Colleges section to view your personalized preparation path, timeline, and learning resources.</p>
+                <a href="{{ url_for('colleges') }}" class="btn btn-primary">
+                    <i class="fas fa-search"></i> Explore Colleges Now
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

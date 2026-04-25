@@ -1,0 +1,527 @@
+{% extends "base.html" %}
+
+{% block title %}Quiz Results - EduPath{% endblock %}
+
+{% block extra_css %}
+<style>
+    .result-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        min-height: calc(100vh - 200px);
+    }
+
+    /* Modern Header */
+    .result-header {
+        background: linear-gradient(135deg, #2d1b69 0%, #1a0e47 100%);
+        border: 1px solid rgba(0, 217, 255, 0.2);
+        color: white;
+        padding: 3.5rem 2rem;
+        border-radius: 20px;
+        text-align: center;
+        margin-bottom: 3rem;
+        box-shadow: 0 15px 50px rgba(0, 217, 255, 0.2);
+        animation: fadeInDown 0.6s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .result-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at top right, rgba(0, 217, 255, 0.1), transparent);
+        pointer-events: none;
+    }
+
+    .result-header-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .result-header h1 {
+        color: #00d9ff;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: 800;
+        text-shadow: 0 2px 10px rgba(0, 217, 255, 0.3);
+    }
+
+    .stream-badge-large {
+        display: inline-block;
+        background: linear-gradient(135deg, rgba(0, 217, 255, 0.15), rgba(74, 144, 226, 0.15));
+        padding: 1.5rem 3rem;
+        border-radius: 15px;
+        font-size: 3.5rem;
+        margin: 1rem 0;
+        border: 2px solid rgba(0, 217, 255, 0.3);
+        backdrop-filter: blur(10px);
+    }
+
+    .stream-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin: 1.5rem 0;
+        color: #00d9ff;
+    }
+
+    .stream-description {
+        font-size: 1.1rem;
+        color: #d4d9e8;
+        margin-top: 1rem;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.8;
+    }
+
+    /* Performance Card */
+    .performance-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .performance-card {
+        background: rgba(45, 27, 105, 0.6);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 217, 255, 0.15);
+        padding: 2rem;
+        border-radius: 16px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .performance-card:hover {
+        border-color: rgba(0, 217, 255, 0.4);
+        box-shadow: 0 8px 32px rgba(0, 217, 255, 0.15);
+        transform: translateY(-5px);
+    }
+
+    .performance-card h4 {
+        color: #7bb3ff;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-weight: 700;
+    }
+
+    .performance-value {
+        color: #00d9ff;
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 0.5rem;
+    }
+
+    .performance-label {
+        color: #d4d9e8;
+        font-size: 0.95rem;
+    }
+
+    /* Info Section */
+    .info-section {
+        background: rgba(45, 27, 105, 0.6);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 217, 255, 0.15);
+        padding: 2.5rem;
+        border-radius: 16px;
+        margin-bottom: 3rem;
+        transition: all 0.3s ease;
+    }
+
+    .info-section:hover {
+        border-color: rgba(0, 217, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 217, 255, 0.1);
+    }
+
+    .info-section h3 {
+        color: #00d9ff;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        font-weight: 800;
+        border-bottom: 2px solid rgba(0, 217, 255, 0.2);
+        padding-bottom: 1rem;
+    }
+
+    .info-section p {
+        color: #d4d9e8;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+    }
+
+    /* Content Grid */
+    .content-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .result-card {
+        background: rgba(45, 27, 105, 0.6);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 217, 255, 0.15);
+        padding: 2.5rem;
+        border-radius: 16px;
+        transition: all 0.3s ease;
+        border-top: 3px solid #00d9ff;
+    }
+
+    .result-card:hover {
+        border-color: rgba(0, 217, 255, 0.4);
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px rgba(0, 217, 255, 0.15);
+    }
+
+    .result-card h3 {
+        color: #00d9ff;
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        font-weight: 700;
+    }
+
+    .card-icon {
+        font-size: 2rem;
+    }
+
+    .card-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .card-list li {
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+        color: #d4d9e8;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .card-list li:last-child {
+        border-bottom: none;
+    }
+
+    .item-title {
+        color: #00d9ff;
+        font-weight: 600;
+        flex: 1;
+    }
+
+    .item-meta {
+        color: #7bb3ff;
+        font-size: 0.85rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .score-chart {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .score-item {
+        background: rgba(45, 27, 105, 0.6);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(0, 217, 255, 0.15);
+        padding: 2rem;
+        border-radius: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .score-item:hover {
+        border-color: rgba(0, 217, 255, 0.4);
+        transform: translateY(-5px);
+    }
+
+    .score-item h4 {
+        color: #00d9ff;
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+    }
+
+    .score-bar {
+        height: 12px;
+        background: rgba(0, 217, 255, 0.1);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+        border: 1px solid rgba(0, 217, 255, 0.2);
+    }
+
+    .score-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #00d9ff, #4a90e2);
+        transition: width 1s ease;
+        border-radius: 10px;
+    }
+
+    .score-value {
+        color: #00d9ff;
+        font-weight: 800;
+        font-size: 1.5rem;
+        display: block;
+        margin-top: 0.5rem;
+    }
+
+    /* Action Buttons */
+    .action-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+    }
+
+    .action-buttons .btn {
+        padding: 1.2rem 2.5rem;
+        font-size: 1.05rem;
+        font-weight: 700;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #00d9ff, #4a90e2);
+        color: white;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 217, 255, 0.3);
+    }
+
+    .btn-secondary {
+        background: transparent;
+        color: #00d9ff;
+        border: 2px solid rgba(0, 217, 255, 0.4);
+    }
+
+    .btn-secondary:hover {
+        background: rgba(0, 217, 255, 0.1);
+        border-color: #00d9ff;
+    }
+
+    @media (max-width: 1024px) {
+        .score-chart {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .result-wrapper {
+            padding: 1rem;
+        }
+
+        .result-header {
+            padding: 2rem;
+        }
+
+        .result-header h1 {
+            font-size: 2rem;
+        }
+
+        .stream-title {
+            font-size: 1.8rem;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .action-buttons .btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="result-wrapper">
+    <!-- Header with Result -->
+    <div class="result-header">
+        <div class="result-header-content">
+            <p style="font-size: 1rem; color: #7bb3ff; margin: 0 0 1rem 0; text-transform: uppercase; letter-spacing: 1px;">🎉 Assessment Complete</p>
+            <h1>Your Ideal Stream</h1>
+            <div class="stream-badge-large">{{ stream_info.icon if stream_info else '📚' }}</div>
+            <div class="stream-title">{{ stream_info.title if stream_info else 'Science' }}</div>
+            <p class="stream-description">{{ stream_info.description if stream_info else 'Based on your assessment results' }}</p>
+        </div>
+    </div>
+
+    <!-- Performance Metrics -->
+    <div class="performance-grid">
+        <div class="performance-card">
+            <h4>⭐ Overall Score</h4>
+            <div class="performance-value">{{ overall_score | default(85) }}%</div>
+            <div class="performance-label">Your aptitude score</div>
+        </div>
+        <div class="performance-card">
+            <h4>🎯 Difficulty Level</h4>
+            <div class="performance-value">{{ difficulty_level | default('INTERMEDIATE') | upper }}</div>
+            <div class="performance-label">Assessment difficulty</div>
+        </div>
+        <div class="performance-card">
+            <h4>💡 Match Score</h4>
+            <div class="performance-value">{{ match_score | default(88) }}%</div>
+            <div class="performance-label">Stream compatibility</div>
+        </div>
+    </div>
+
+    <!-- Score Breakdown -->
+    <div class="score-chart">
+        <div class="score-item">
+            <h4>� Science</h4>
+            <div class="score-bar">
+                <div class="score-fill" style="width: {{ scores.science | default(65) }}%"></div>
+            </div>
+            <span class="score-value">{{ scores.science | default(65) }}%</span>
+        </div>
+
+        <div class="score-item">
+            <h4>📊 Commerce</h4>
+            <div class="score-bar">
+                <div class="score-fill" style="width: {{ scores.commerce | default(45) }}%"></div>
+            </div>
+            <span class="score-value">{{ scores.commerce | default(45) }}%</span>
+        </div>
+
+        <div class="score-item">
+            <h4>📚 Arts</h4>
+            <div class="score-bar">
+                <div class="score-fill" style="width: {{ scores.arts | default(40) }}%"></div>
+            </div>
+            <span class="score-value">{{ scores.arts | default(40) }}%</span>
+        </div>
+
+        <div class="score-item">
+            <h4>🔧 Vocational</h4>
+            <div class="score-bar">
+                <div class="score-fill" style="width: {{ scores.vocational | default(35) }}%"></div>
+            </div>
+            <span class="score-value">{{ scores.vocational | default(35) }}%</span>
+        </div>
+    </div>
+
+    <!-- Stream Information -->
+    <div class="info-section">
+        <h3>💡 About {{ stream_info.title if stream_info else 'Your Stream' }}</h3>
+        <p>{{ stream_info.about if stream_info else 'Start your journey in your ideal stream with EduPath.' }}</p>
+    </div>
+
+    <!-- Content Grid: Degrees, Careers, Exams -->
+    <div class="content-grid">
+        <!-- Degrees -->
+        <div class="result-card">
+            <h3><span class="card-icon">🎓</span> Degree Programs</h3>
+            <ul class="card-list">
+                {% if stream_info and stream_info.degrees %}
+                    {% for degree in stream_info.degrees %}
+                    <li>
+                        <span class="item-title">{{ degree.name }}</span>
+                        <span class="item-meta">{{ degree.duration }}</span>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <li><span class="item-title">B.Tech / B.Sc</span><span class="item-meta">4 Years</span></li>
+                    <li><span class="item-title">B.A / B.Com</span><span class="item-meta">3 Years</span></li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <!-- Careers -->
+        <div class="result-card">
+            <h3><span class="card-icon">💼</span> Career Options</h3>
+            <ul class="card-list">
+                {% if stream_info and stream_info.careers %}
+                    {% for career in stream_info.careers %}
+                    <li>
+                        <span class="item-title">{{ career.title }}</span>
+                        <span class="item-meta">{{ career.salary }}</span>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <li><span class="item-title">Engineer</span><span class="item-meta">₹6-10 LPA</span></li>
+                    <li><span class="item-title">Software Developer</span><span class="item-meta">₹8-12 LPA</span></li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <!-- Exams -->
+        <div class="result-card">
+            <h3><span class="card-icon">📝</span> Important Exams</h3>
+            <ul class="card-list">
+                {% if stream_info and stream_info.exams %}
+                    {% for exam in stream_info.exams %}
+                    <li>
+                        <span class="item-title">{{ exam.name }}</span>
+                        <span class="item-meta">{{ exam.frequency }}</span>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                    <li><span class="item-title">JEE Main</span><span class="item-meta">Annual</span></li>
+                    <li><span class="item-title">NEET</span><span class="item-meta">Annual</span></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Next Steps -->
+    <div class="info-section">
+        <h3>📋 Your Next Steps</h3>
+        <ol style="list-style-position: inside; color: #d4d9e8; line-height: 2;">
+            <li><strong style="color: #00d9ff;">Research:</strong> Explore government colleges offering your stream</li>
+            <li><strong style="color: #00d9ff;">Prepare:</strong> Create a study plan for relevant entrance exams</li>
+            <li><strong style="color: #00d9ff;">Connect:</strong> Reach out to mentors and current students</li>
+            <li><strong style="color: #00d9ff;">Practice:</strong> Solve previous year exam papers</li>
+            <li><strong style="color: #00d9ff;">Apply:</strong> Prepare college applications early</li>
+        </ol>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <a href="{{ url_for('career_paths', stream=stream) }}" class="btn btn-primary">🚀 Explore Career Path</a>
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">📊 Dashboard</a>
+        <a href="{{ url_for('quiz') }}" class="btn btn-secondary">🔄 Retake Assessment</a>
+    </div>
+</div>
+{% endblock %}

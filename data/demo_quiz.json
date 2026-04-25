@@ -1,0 +1,69 @@
+{
+    "quiz": {
+        "title": "Career Aptitude Quiz",
+        "description": "12-question scientifically designed assessment",
+        "totalQuestions": 12,
+        "questions": [
+            {
+                "id": "q1",
+                "question": "Which activities do you enjoy the most?",
+                "type": "multiple-choice"
+            },
+            {
+                "id": "q2",
+                "question": "How comfortable are you with Mathematics?",
+                "type": "multiple-choice"
+            },
+            {
+                "id": "q3",
+                "question": "What is your preferred way of learning?",
+                "type": "multiple-choice"
+            },
+            {
+                "id": "q4",
+                "question": "Which subjects do you perform best in?",
+                "type": "multiple-choice"
+            },
+            {
+                "id": "q5",
+                "question": "What motivates you the most in a career?",
+                "type": "multiple-choice"
+            },
+            {
+                "id": "q6",
+                "question": "How do you feel about working with numbers and data?",
+                "type": "multiple-choice"
+            },
+            {
+                "id": "q7",
+                "question": "Do you prefer working alone or in teams?",
+                "type": "multiple-choice"
+            },
+            {
+                "id": "q8",
+                "question": "What type of work environment appeals to you?",
+                "type": "multiple-choice"
+            },
+            {
+                "id": "q9",
+                "question": "How important is job location flexibility for you?",
+                "type": "multiple-choice"
+            },
+            {
+                "id": "q10",
+                "question": "What is your career goal after high school?",
+                "type": "multiple-choice"
+            },
+            {
+                "id": "q11",
+                "question": "How do you feel about competitive exams (JEE, NEET, etc.)?",
+                "type": "multiple-choice"
+            },
+            {
+                "id": "q12",
+                "question": "What is your academic performance level?",
+                "type": "multiple-choice"
+            }
+        ]
+    }
+}

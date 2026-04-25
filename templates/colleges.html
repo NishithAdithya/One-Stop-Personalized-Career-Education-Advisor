@@ -1,0 +1,1120 @@
+{% extends "base.html" %}
+
+{% block title %}Colleges - EduPath{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* ============ COLLEGES PAGE ============ */
+    .colleges-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .colleges-header {
+        background: linear-gradient(135deg, #2d1b69 0%, #1a0e47 100%);
+        border: 1px solid rgba(0, 217, 255, 0.2);
+        color: white;
+        padding: 3.5rem 2rem;
+        border-radius: 20px;
+        margin-bottom: 2.5rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .colleges-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at top right, rgba(0, 217, 255, 0.1), transparent);
+        pointer-events: none;
+    }
+
+    .colleges-header h1 {
+        color: #00d9ff;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 800;
+        position: relative;
+        z-index: 1;
+    }
+
+    .colleges-header p {
+        color: #d4d9e8;
+        font-size: 1.1rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* ============ FILTER SECTION ============ */
+    .filter-container {
+        background: rgba(45, 27, 105, 0.6);
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+        border-radius: 16px;
+        margin-bottom: 2.5rem;
+        border: 1px solid rgba(0, 217, 255, 0.15);
+    }
+
+    .filter-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+
+    .filter-header h3 {
+        font-size: 1.2rem;
+        color: #00d9ff;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .filter-reset-btn {
+        background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(74, 144, 226, 0.2));
+        color: #00d9ff;
+        border: 1px solid rgba(0, 217, 255, 0.3);
+        padding: 0.6rem 1.2rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        font-weight: 600;
+    }
+
+    .filter-reset-btn:hover {
+        background: linear-gradient(135deg, rgba(0, 217, 255, 0.3), rgba(74, 144, 226, 0.3));
+        border-color: rgba(0, 217, 255, 0.5);
+        transform: translateY(-2px);
+    }
+
+    .filter-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .filter-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .filter-group label {
+        display: block;
+        margin-bottom: 0.6rem;
+        color: #7bb3ff;
+        font-weight: 700;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .filter-group select,
+    .filter-group input {
+        padding: 0.75rem;
+        border: 1px solid rgba(0, 217, 255, 0.2);
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        background-color: rgba(15, 7, 41, 0.8);
+        color: #d4d9e8;
+        font-weight: 500;
+    }
+
+    .filter-group select option {
+        background-color: #1a0e47;
+        color: #d4d9e8;
+    }
+
+    .filter-group select:focus,
+    .filter-group input:focus {
+        outline: none;
+        border-color: #00d9ff;
+        box-shadow: 0 0 12px rgba(0, 217, 255, 0.2);
+        background-color: rgba(15, 7, 41, 0.9);
+    }
+
+    .filter-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-end;
+    }
+
+    .filter-buttons .btn {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.95rem;
+    }
+
+    /* ============ COLLEGES GRID ============ */
+    .colleges-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    .college-card {
+        background: rgba(45, 27, 105, 0.5);
+        border-radius: 16px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(0, 217, 255, 0.15);
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        backdrop-filter: blur(10px);
+    }
+
+    .college-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(0, 217, 255, 0.4);
+        box-shadow: 0 12px 40px rgba(0, 217, 255, 0.15);
+        background: rgba(45, 27, 105, 0.7);
+    }
+
+    .college-card-header {
+        background: linear-gradient(135deg, rgba(0, 217, 255, 0.15), rgba(74, 144, 226, 0.15));
+        padding: 1.5rem;
+        border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+    }
+
+    .college-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #00d9ff, #4a90e2);
+        color: white;
+        padding: 0.35rem 0.9rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 0.75rem;
+        letter-spacing: 0.5px;
+    }
+
+    .college-name {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #00d9ff;
+        margin-bottom: 0.5rem;
+        line-height: 1.3;
+    }
+
+    .college-location {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #7bb3ff;
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+
+    .college-card-body {
+        padding: 1.5rem;
+        flex-grow: 1;
+    }
+
+    .college-info-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .college-info-item {
+        background: rgba(0, 217, 255, 0.08);
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid rgba(0, 217, 255, 0.15);
+    }
+
+    .college-info-label {
+        font-size: 0.75rem;
+        color: #7bb3ff;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.35rem;
+    }
+
+    .college-info-value {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #00d9ff;
+    }
+
+    .college-programs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .program-tag {
+        display: inline-block;
+        background: rgba(0, 217, 255, 0.2);
+        color: #00d9ff;
+        padding: 0.3rem 0.7rem;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        border: 1px solid rgba(0, 217, 255, 0.3);
+    }
+
+    .college-rating {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .stars {
+        color: #fbbf24;
+    }
+
+    .college-card-footer {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid rgba(0, 217, 255, 0.1);
+        background: rgba(0, 217, 255, 0.05);
+        display: flex;
+        gap: 0.75rem;
+    }
+
+    .college-card-footer .btn {
+        flex: 1;
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary-small {
+        background: linear-gradient(135deg, #00d9ff, #4a90e2);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 700;
+    }
+
+    .btn-primary-small:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 217, 255, 0.3);
+    }
+
+    .btn-secondary-small {
+        background: transparent;
+        color: #00d9ff;
+        border: 2px solid rgba(0, 217, 255, 0.4);
+        border-radius: 8px;
+        font-weight: 700;
+    }
+
+    .btn-secondary-small:hover {
+        background: rgba(0, 217, 255, 0.1);
+        border-color: #00d9ff;
+        color: #00d9ff;
+    }
+
+    .btn-select-small {
+        background: linear-gradient(135deg, #00d9ff, #4a90e2);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 700;
+    }
+
+    .btn-select-small:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 217, 255, 0.3);
+    }
+
+    .btn-select-small.selected {
+        background: linear-gradient(135deg, #00d9ff, #4a90e2);
+        box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+    }
+
+    /* ============ COLLEGE DETAILS MODAL ============ */
+    .details-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        backdrop-filter: blur(5px);
+        display: none;
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .details-modal.active {
+        display: flex;
+    }
+
+    .details-content {
+        background: linear-gradient(135deg, #1a0e47, #2d1b69);
+        border-radius: 20px;
+        border: 1px solid rgba(0, 217, 255, 0.2);
+        max-width: 700px;
+        width: 100%;
+        max-height: 90vh;
+        overflow-y: auto;
+        padding: 2rem;
+        animation: slideUp 0.3s ease;
+        position: relative;
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(100px);
+            opacity: 0;
+        }
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    .details-close-btn {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: transparent;
+        border: none;
+        color: #00d9ff;
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .details-close-btn:hover {
+        color: #ff6b6b;
+        transform: rotate(90deg);
+    }
+
+    .details-header {
+        margin-bottom: 2rem;
+        padding-right: 2rem;
+    }
+
+    .details-title {
+        font-size: 2rem;
+        color: #00d9ff;
+        margin-bottom: 0.5rem;
+        font-weight: 800;
+    }
+
+    .details-section {
+        margin-bottom: 1.5rem;
+    }
+
+    .details-section-title {
+        font-size: 1.1rem;
+        color: #00d9ff;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .details-section-content {
+        color: #d4d9e8;
+        line-height: 1.6;
+    }
+
+    .details-facility-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+    }
+
+    .facility-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #7bb3ff;
+    }
+
+    .details-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(0, 217, 255, 0.1);
+    }
+
+    .details-buttons .btn {
+        flex: 1;
+        padding: 0.75rem 1rem;
+    }
+
+    /* ============ COMPARISON SECTION ============ */
+    .comparison-container {
+        background: rgba(45, 27, 105, 0.6);
+        border-radius: 16px;
+        border: 1px solid rgba(0, 217, 255, 0.15);
+        padding: 2rem;
+        margin-bottom: 2.5rem;
+        backdrop-filter: blur(10px);
+    }
+
+    .comparison-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.5rem;
+    }
+
+    .comparison-header h3 {
+        font-size: 1.2rem;
+        color: #00d9ff;
+        margin: 0;
+        font-weight: 700;
+    }
+
+    .comparison-count {
+        background: linear-gradient(135deg, #00d9ff, #4a90e2);
+        color: white;
+        padding: 0.35rem 0.9rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .comparison-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .comparison-card {
+        background: rgba(15, 7, 41, 0.8);
+        border-radius: 12px;
+        border: 1px solid rgba(0, 217, 255, 0.2);
+        padding: 1.5rem;
+        position: relative;
+    }
+
+    .comparison-card-title {
+        font-size: 1.1rem;
+        color: #00d9ff;
+        font-weight: 700;
+        margin-bottom: 1rem;
+    }
+
+    .comparison-details {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .comparison-detail-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid rgba(0, 217, 255, 0.1);
+    }
+
+    .comparison-detail-label {
+        color: #7bb3ff;
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+
+    .comparison-detail-value {
+        color: #00d9ff;
+        font-weight: 700;
+    }
+
+    .comparison-remove-btn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background: rgba(255, 107, 107, 0.1);
+        border: 1px solid rgba(255, 107, 107, 0.3);
+        color: #ff6b6b;
+        border-radius: 6px;
+        padding: 0.35rem 0.6rem;
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: all 0.3s ease;
+    }
+
+    .comparison-remove-btn:hover {
+        background: rgba(255, 107, 107, 0.2);
+        border-color: #ff6b6b;
+    }
+
+    .comparison-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .comparison-actions .btn {
+        padding: 0.75rem 1.5rem;
+    }
+
+    .comparison-empty {
+        text-align: center;
+        color: #7bb3ff;
+        padding: 2rem;
+        background: rgba(0, 217, 255, 0.05);
+        border-radius: 12px;
+        border: 1px dashed rgba(0, 217, 255, 0.2);
+    }
+
+    /* ============ EMPTY STATE ============ */
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: rgba(45, 27, 105, 0.6);
+        border-radius: 16px;
+        border: 2px dashed rgba(0, 217, 255, 0.2);
+        backdrop-filter: blur(10px);
+    }
+
+    .empty-state-icon {
+        font-size: 3rem;
+        color: rgba(0, 217, 255, 0.3);
+        margin-bottom: 1rem;
+    }
+
+    .empty-state h3 {
+        color: #00d9ff;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+
+    .empty-state p {
+        color: #7bb3ff;
+        margin-bottom: 1.5rem;
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 768px) {
+        .colleges-header {
+            padding: 2rem;
+        }
+
+        .colleges-header h1 {
+            font-size: 1.8rem;
+        }
+
+        .filter-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .filter-buttons {
+            justify-content: stretch;
+        }
+
+        .filter-buttons .btn {
+            flex: 1;
+        }
+
+        .colleges-container {
+            grid-template-columns: 1fr;
+        }
+
+        .college-info-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .college-card-footer {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="colleges-wrapper">
+    <!-- Header -->
+    <div class="colleges-header">
+        <h1>🎓 Explore Colleges</h1>
+        <p>Find the perfect college matching your criteria and aspirations</p>
+    </div>
+
+    <!-- Comparison Section -->
+    <div class="comparison-container" id="comparison-section" style="display: none;">
+        <div class="comparison-header">
+            <h3><i class="fas fa-balance-scale"></i> Compare Colleges</h3>
+            <span class="comparison-count">
+                <span id="comparison-count">0</span> Selected
+            </span>
+        </div>
+        <div id="comparison-grid" class="comparison-grid"></div>
+        <div id="comparison-empty" class="comparison-empty" style="display: none;">
+            <p>Select colleges to compare them side-by-side</p>
+        </div>
+        <div class="comparison-actions" id="comparison-actions" style="display: none;">
+            <button class="btn btn-secondary" onclick="clearComparison()">
+                <i class="fas fa-trash"></i> Clear Comparison
+            </button>
+        </div>
+    </div>
+
+    <!-- Filter Section -->
+    <div class="filter-container">
+        <div class="filter-header">
+            <h3><i class="fas fa-filter"></i> Filter Colleges</h3>
+            <button class="filter-reset-btn" onclick="resetFilters()">
+                <i class="fas fa-redo"></i> Reset Filters
+            </button>
+        </div>
+
+        <div class="filter-grid">
+            <div class="filter-group">
+                <label for="course-type-filter">Course Type</label>
+                <select id="course-type-filter" onchange="applyFilters()">
+                    <option value="">All Course Types</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="B.Ed">B.Ed (Teacher Education)</option>
+                    <option value="Pharmacy">Pharmacy (B.Pharm)</option>
+                    <option value="Law">Law (LL.B)</option>
+                    <option value="BCA">BCA</option>
+                    <option value="Arts">Arts (B.A.)</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="city-filter">City</label>
+                <select id="city-filter" onchange="applyFilters()">
+                    <option value="">All Cities</option>
+                    <option value="Jammu">Jammu</option>
+                    <option value="Srinagar">Srinagar</option>
+                    <option value="Katra">Katra</option>
+                    <option value="Udhampur">Udhampur</option>
+                    <option value="Baramulla">Baramulla</option>
+                    <option value="Rajouri">Rajouri</option>
+                    <option value="Anantnag">Anantnag</option>
+                    <option value="Sopore">Sopore</option>
+                    <option value="Ganderbal">Ganderbal</option>
+                    <option value="Awantipora">Awantipora</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="stream-filter">Stream</label>
+                <select id="stream-filter" onchange="applyFilters()">
+                    <option value="">All Streams</option>
+                    <option value="Science">Science</option>
+                    <option value="Commerce">Commerce</option>
+                    <option value="Arts">Arts</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="fees-filter">Max Fees (₹ Lakhs)</label>
+                <input type="number" id="fees-filter" placeholder="e.g., 10" onchange="applyFilters()">
+            </div>
+
+            <div class="filter-group">
+                <label for="admission-type">Admission Type</label>
+                <select id="admission-type" onchange="applyFilters()">
+                    <option value="">All Types</option>
+                    <option value="JEE Main">JEE Main</option>
+                    <option value="JEE Advanced">JEE Advanced</option>
+                    <option value="Merit">Merit Based</option>
+                    <option value="University">University Admission</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Colleges Grid -->
+    <div id="colleges-grid" class="colleges-container">
+        <!-- Colleges will be populated here via JavaScript -->
+    </div>
+
+    <!-- Empty State (shown when no colleges match filters) -->
+    <div id="empty-state" class="empty-state" style="display: none;">
+        <div class="empty-state-icon">
+            <i class="fas fa-search"></i>
+        </div>
+        <h3>No Colleges Found</h3>
+        <p>Try adjusting your filters to find more colleges</p>
+    </div>
+</div>
+
+<!-- Details Modal -->
+<div class="details-modal" id="details-modal">
+    <div class="details-content">
+        <button class="details-close-btn" onclick="closeDetails()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div id="details-body"></div>
+    </div>
+</div>
+
+<script>
+    // Comparison tracking
+    let selectedColleges = [];
+    let collegesData = [];
+
+    // Load colleges from backend
+    async function loadColleges() {
+        try {
+            const response = await fetch('/api/colleges');
+            const data = await response.json();
+            collegesData = data.colleges;
+            applyFilters();
+        } catch (error) {
+            console.error('Error loading colleges:', error);
+            alert('Error loading colleges. Please refresh the page.');
+        }
+    }
+
+    function renderColleges(colleges = collegesData) {
+        const grid = document.getElementById('colleges-grid');
+        const emptyState = document.getElementById('empty-state');
+
+        if (colleges.length === 0) {
+            grid.style.display = 'none';
+            emptyState.style.display = 'block';
+            return;
+        }
+
+        grid.style.display = 'grid';
+        emptyState.style.display = 'none';
+
+        grid.innerHTML = colleges.map(college => `
+            <div class="college-card">
+                <div class="college-card-header">
+                    <span class="college-badge">${college.stream}</span>
+                    <h2 class="college-name">${college.name}</h2>
+                    <div class="college-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>${college.city}</span>
+                    </div>
+                </div>
+
+                <div class="college-card-body">
+                    <div class="college-rating">
+                        <span class="stars">
+                            ${'⭐'.repeat(Math.floor(college.rating))}
+                        </span>
+                        <span>${college.rating}/5</span>
+                    </div>
+
+                    <div class="college-info-grid">
+                        <div class="college-info-item">
+                            <div class="college-info-label">Fees</div>
+                            <div class="college-info-value">₹${college.fees}L</div>
+                        </div>
+                        <div class="college-info-item">
+                            <div class="college-info-label">Year</div>
+                            <div class="college-info-value">${college.degree}</div>
+                        </div>
+                    </div>
+
+                    <div class="college-programs">
+                        ${college.programs.slice(0, 2).map(p => `<span class="program-tag">${p}</span>`).join('')}
+                        ${college.programs.length > 2 ? `<span class="program-tag">+${college.programs.length - 2}</span>` : ''}
+                    </div>
+
+                    <p style="color: var(--gray-600); font-size: 0.9rem; margin-bottom: 0;">
+                        <i class="fas fa-check-circle" style="color: var(--success);"></i>
+                        Admission: ${college.admissionType}
+                    </p>
+                </div>
+
+                <div class="college-card-footer">
+                    <button class="btn btn-primary-small" onclick="viewDetails(${college.id})">
+                        <i class="fas fa-eye"></i> Details
+                    </button>
+                    <button class="btn btn-secondary-small" onclick="toggleCompare(${college.id})">
+                        <i class="fas fa-code-branch"></i> Compare
+                    </button>
+                    <button class="btn btn-select-small" onclick="selectCollege(${college.id})">
+                        <i class="fas fa-check"></i> Select
+                    </button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function applyFilters() {
+        const courseType = document.getElementById('course-type-filter').value;
+        const city = document.getElementById('city-filter').value;
+        const stream = document.getElementById('stream-filter').value;
+        const fees = parseFloat(document.getElementById('fees-filter').value) || Infinity;
+        const admissionType = document.getElementById('admission-type').value;
+
+        const filtered = collegesData.filter(college => {
+            const collegeFeesInLakhs = parseFloat(college.fees);
+            return (
+                (!courseType || college.stream === courseType) &&
+                (!city || college.city === city) &&
+                (!stream || college.stream === stream) &&
+                (collegeFeesInLakhs <= fees) &&
+                (!admissionType || college.admissionType.includes(admissionType))
+            );
+        });
+
+        renderColleges(filtered);
+    }
+
+    function resetFilters() {
+        document.getElementById('course-type-filter').value = '';
+        document.getElementById('city-filter').value = '';
+        document.getElementById('stream-filter').value = '';
+        document.getElementById('fees-filter').value = '';
+        document.getElementById('admission-type').value = '';
+        renderColleges();
+    }
+
+    // Get URL parameters and apply initial filters
+    function getUrlParams() {
+        const params = {};
+        const queryString = window.location.search.substring(1);
+        const pairs = queryString.split('&');
+        for (let pair of pairs) {
+            const [key, value] = pair.split('=');
+            params[key] = decodeURIComponent(value);
+        }
+        return params;
+    }
+
+    // Apply course filter from URL on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const params = getUrlParams();
+        const course = params.course;
+        const stream = params.stream;
+        
+        // Load colleges first, then apply filters
+        loadColleges().then(() => {
+            if (course) {
+                document.getElementById('course-type-filter').value = course;
+            }
+            if (stream) {
+                document.getElementById('stream-filter').value = stream;
+            }
+            applyFilters();
+        });
+    });
+
+    function viewDetails(collegeId) {
+        const college = collegesData.find(c => c.id === collegeId);
+        if (college) {
+            const modal = document.getElementById('details-modal');
+            const body = document.getElementById('details-body');
+            
+            body.innerHTML = `
+                <div class="details-header">
+                    <div class="details-title">${college.name}</div>
+                    <div class="college-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>${college.city}</span>
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <div class="details-section-title">
+                        <i class="fas fa-info-circle"></i> About
+                    </div>
+                    <div class="details-section-content">
+                        ${college.description}
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <div class="details-section-title">
+                        <i class="fas fa-chart-line"></i> Key Statistics
+                    </div>
+                    <div class="details-facility-list">
+                        <div class="facility-item">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Established: ${college.established}</span>
+                        </div>
+                        <div class="facility-item">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Placement: ${college.placement}</span>
+                        </div>
+                        <div class="facility-item">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>Avg Package: ${college.avgPackage}</span>
+                        </div>
+                        <div class="facility-item">
+                            <i class="fas fa-rupee-sign"></i>
+                            <span>Fees: ₹${college.fees} Lakhs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <div class="details-section-title">
+                        <i class="fas fa-graduation-cap"></i> Programs Offered
+                    </div>
+                    <div class="details-facility-list">
+                        ${college.programs.map(p => `
+                            <div class="facility-item">
+                                <i class="fas fa-check-circle" style="color: #00d9ff;"></i>
+                                <span>${p}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <div class="details-section-title">
+                        <i class="fas fa-building"></i> Facilities
+                    </div>
+                    <div class="details-facility-list">
+                        ${college.facilities.map(f => `
+                            <div class="facility-item">
+                                <i class="fas fa-check-circle" style="color: #00d9ff;"></i>
+                                <span>${f}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="details-section">
+                    <div class="details-section-title">
+                        <i class="fas fa-door-open"></i> Admission
+                    </div>
+                    <div class="details-section-content">
+                        <strong>Type:</strong> ${college.admissionType}<br>
+                        <strong>Degree:</strong> ${college.degree}
+                    </div>
+                </div>
+
+                <div class="details-buttons">
+                    <button class="btn btn-primary" onclick="selectCollege(${college.id}); closeDetails();">
+                        <i class="fas fa-check-circle"></i> Select College
+                    </button>
+                    <button class="btn btn-secondary" onclick="closeDetails()">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        }
+    }
+
+    function closeDetails() {
+        document.getElementById('details-modal').classList.remove('active');
+    }
+
+    function toggleCompare(collegeId) {
+        const college = collegesData.find(c => c.id === collegeId);
+        const index = selectedColleges.findIndex(c => c.id === collegeId);
+        
+        if (index > -1) {
+            // Remove from comparison
+            selectedColleges.splice(index, 1);
+        } else {
+            // Add to comparison
+            selectedColleges.push(college);
+        }
+        
+        updateComparisonView();
+    }
+
+    function updateComparisonView() {
+        const section = document.getElementById('comparison-section');
+        const grid = document.getElementById('comparison-grid');
+        const empty = document.getElementById('comparison-empty');
+        const count = document.getElementById('comparison-count');
+        const actions = document.getElementById('comparison-actions');
+
+        if (selectedColleges.length === 0) {
+            section.style.display = 'none';
+            return;
+        }
+
+        section.style.display = 'block';
+        count.textContent = selectedColleges.length;
+
+        grid.innerHTML = selectedColleges.map(college => `
+            <div class="comparison-card">
+                <button class="comparison-remove-btn" onclick="toggleCompare(${college.id})">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="comparison-card-title">${college.name}</div>
+                <div class="comparison-details">
+                    <div class="comparison-detail-item">
+                        <span class="comparison-detail-label">Stream</span>
+                        <span class="comparison-detail-value">${college.stream}</span>
+                    </div>
+                    <div class="comparison-detail-item">
+                        <span class="comparison-detail-label">Location</span>
+                        <span class="comparison-detail-value">${college.city}</span>
+                    </div>
+                    <div class="comparison-detail-item">
+                        <span class="comparison-detail-label">Fees</span>
+                        <span class="comparison-detail-value">₹${college.fees}L</span>
+                    </div>
+                    <div class="comparison-detail-item">
+                        <span class="comparison-detail-label">Rating</span>
+                        <span class="comparison-detail-value">${college.rating}/5</span>
+                    </div>
+                    <div class="comparison-detail-item">
+                        <span class="comparison-detail-label">Placement</span>
+                        <span class="comparison-detail-value">${college.placement}</span>
+                    </div>
+                    <div class="comparison-detail-item">
+                        <span class="comparison-detail-label">Avg Package</span>
+                        <span class="comparison-detail-value">${college.avgPackage}</span>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        actions.style.display = selectedColleges.length > 0 ? 'flex' : 'none';
+    }
+
+    function clearComparison() {
+        selectedColleges = [];
+        updateComparisonView();
+    }
+
+    function selectCollege(collegeId) {
+        const college = collegesData.find(c => c.id === collegeId);
+        if (college) {
+            // Store selected college in session
+            fetch('/set_selected_college', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ college_id: collegeId, college_name: college.name })
+            }).then(response => {
+                if (response.ok) {
+                    alert(`✓ ${college.name} selected! Navigate to Dashboard to see your preparation path.`);
+                } else {
+                    alert('Error selecting college. Please try again.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('Error selecting college. Please try again.');
+            });
+        }
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('details-modal')?.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeDetails();
+        }
+    });
+
+    // Initial render
+    renderColleges();
+</script>
+{% endblock %}

@@ -1,0 +1,70 @@
+/* ============ Pastel Light Purple Theme ============ */
+
+:root {
+    --primary-100: #f7f3ff;
+    --primary-200: #efe6ff;
+    --primary-300: #e7dbff;
+    --primary-400: #d1bfff;
+    --accent-100: #f0eaff;
+    --accent-200: #e3d6ff;
+    --accent-300: #c7aef7;
+    --accent-400: #b28af0;
+    --text-light: #2e1e46; /* primary readable text (dark) */
+    --text-muted: #6b5f7a;
+    --bg: linear-gradient(135deg, var(--primary-300) 0%, var(--primary-100) 50%, var(--primary-400) 100%);
+    --border: rgba(150,120,220,0.25);
+    --shadow-soft: 0 8px 24px rgba(120, 80, 200, 0.06);
+}
+
+* {box-sizing: border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+    font-family: 'Poppins','Segoe UI',Roboto,system-ui,-apple-system,Arial;
+    background: var(--bg);
+    color: var(--text-light);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+}
+
+/* Typography */
+h1,h2,h3,h4,h5,h6{font-weight:700;color:var(--text-light);letter-spacing:0.6px;margin:0 0 0.75rem}
+h1{font-size:2.8rem}
+h2{font-size:2rem}
+h3{font-size:1.4rem}
+p,button,input,textarea,select{color:var(--text-light)}
+
+/* Navigation */
+nav{background:rgba(255,255,255,0.85);backdrop-filter:blur(8px);padding:1rem 2rem;border-bottom:1px solid var(--border);box-shadow:var(--shadow-soft);display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:1.8rem;font-weight:800;background:linear-gradient(135deg,var(--accent-300),var(--accent-200));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:1.5px}
+nav a{color:var(--text-light);text-decoration:none;font-weight:600;padding:0.4rem 1rem}
+nav a:hover{color:var(--accent-300)}
+
+/* Buttons */
+.btn{display:inline-block;padding:0.75rem 1.5rem;border-radius:999px;font-weight:700;cursor:pointer;border:none}
+.btn-primary{background:linear-gradient(135deg,var(--accent-300),var(--accent-400));color:white;box-shadow:0 6px 20px rgba(160,120,255,0.12)}
+.btn-secondary{background:transparent;color:var(--text-light);border:2px solid var(--primary-200)}
+.btn-outline{background:transparent;border:2px solid var(--primary-200);color:var(--text-light)}
+
+/* Cards */
+.card{background:rgba(255,255,255,0.8);border:1px solid var(--border);border-radius:12px;padding:1.5rem;box-shadow:var(--shadow-soft)}
+.card h2,.card h3,.card h4{color:var(--text-light)}
+.card p{color:var(--text-muted)}
+
+/* Forms */
+input,textarea,select{width:100%;padding:12px 14px;border-radius:8px;border:1px solid var(--border);background:rgba(255,255,255,0.9);color:var(--text-light)}
+label{color:var(--text-light);font-weight:600}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;background:rgba(255,255,255,0.85);border-radius:8px;overflow:hidden}
+table thead{background:rgba(180,140,255,0.06)}
+table th{padding:0.9rem;text-align:left;color:var(--text-light);font-weight:700;border-bottom:2px solid var(--border);text-transform:uppercase;font-size:0.85rem}
+table td{padding:0.9rem;border-bottom:1px solid var(--border);color:var(--text-muted)}
+table tbody tr:hover{background:rgba(200,170,255,0.04)}
+
+/* Utilities */
+.container{max-width:1200px;margin:0 auto;padding:0 2rem}
+.text-center{text-align:center}
+
+@media (max-width:768px){h1{font-size:2.2rem}h2{font-size:1.6rem}}
+
+/* end */

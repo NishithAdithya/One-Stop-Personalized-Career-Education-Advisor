@@ -1,0 +1,429 @@
+{
+    "info": {
+        "name": "Career Advisor API - v3.0",
+        "description": "Complete API collection for Career Advisor Platform",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Health & System",
+            "item": [
+                {
+                    "name": "Health Check",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/api/health",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "api",
+                                "health"
+                            ]
+                        },
+                        "description": "Check if API is running"
+                    }
+                },
+                {
+                    "name": "Home Page",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                ""
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Colleges - Basic",
+            "item": [
+                {
+                    "name": "Get All Colleges",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/api/colleges",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "api",
+                                "colleges"
+                            ]
+                        },
+                        "description": "Get all colleges with default pagination"
+                    }
+                },
+                {
+                    "name": "Get All Colleges (Pagination)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/api/colleges?page=1&limit=5",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "api",
+                                "colleges"
+                            ],
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1"
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "5"
+                                }
+                            ]
+                        },
+                        "description": "Get colleges with pagination (page 1, 5 per page)"
+                    }
+                },
+                {
+                    "name": "Get College by ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/api/colleges/1",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "api",
+                                "colleges",
+                                "1"
+                            ]
+                        },
+                        "description": "Get specific college by ID"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Colleges - Search & Filter",
+            "item": [
+                {
+                    "name": "Search Colleges",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/api/colleges/search?query=Science",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "api",
+                                "colleges",
+                                "search"
+                            ],
+                            "query": [
+                                {
+                                    "key": "query",
+                                    "value": "Science"
+                                }
+                            ]
+                        },
+                        "description": "Search colleges by name or city"
+                    }
+                },
+                {
+                    "name": "Filter by City",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/api/colleges/by-city/Jammu",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "api",
+                                "colleges",
+                                "by-city",
+                                "Jammu"
+                            ]
+                        },
+                        "description": "Get all colleges in a specific city"
+                    }
+                },
+                {
+                    "name": "Filter by Stream",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/api/colleges/by-stream/Engineering",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "api",
+                                "colleges",
+                                "by-stream",
+                                "Engineering"
+                            ]
+                        },
+                        "description": "Get colleges by stream/field"
+                    }
+                },
+                {
+                    "name": "Filter by Degree",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/api/colleges/by-degree/BTech",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "api",
+                                "colleges",
+                                "by-degree",
+                                "BTech"
+                            ]
+                        },
+                        "description": "Get colleges offering specific degree"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Colleges - Advanced Filtering",
+            "item": [
+                {
+                    "name": "Advanced Filter",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n  \"city\": \"Jammu\",\n  \"degree_type\": \"Engineering\",\n  \"max_fees\": 100000,\n  \"admission_type\": \"Merit-based\"\n}"
+                        },
+                        "url": {
+                            "raw": "http://localhost:5000/api/colleges/filter",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "api",
+                                "colleges",
+                                "filter"
+                            ]
+                        },
+                        "description": "Advanced filtering with multiple criteria"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Colleges - Statistics",
+            "item": [
+                {
+                    "name": "Get Statistics",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/api/colleges/stats",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "api",
+                                "colleges",
+                                "stats"
+                            ]
+                        },
+                        "description": "Get aggregated college statistics"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Authentication",
+            "item": [
+                {
+                    "name": "Login Page",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/login",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "login"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Signup Page",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/signup",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "signup"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Dashboard",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/dashboard",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "dashboard"
+                            ]
+                        },
+                        "description": "User dashboard (requires login)"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Quiz System",
+            "item": [
+                {
+                    "name": "Quiz Page",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/quiz",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "quiz"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Quiz Results",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/result",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "result"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Information Pages",
+            "item": [
+                {
+                    "name": "About Page",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/about",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "about"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Colleges Listing (HTML)",
+                    "request": {
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "http://localhost:5000/colleges",
+                            "protocol": "http",
+                            "host": [
+                                "localhost"
+                            ],
+                            "port": "5000",
+                            "path": [
+                                "colleges"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}

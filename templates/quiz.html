@@ -1,0 +1,421 @@
+{% extends "base.html" %}
+
+{% block title %}Career Aptitude Quiz - EduPath{% endblock %}
+
+{% block extra_css %}
+<style>
+    .quiz-wrapper {
+        min-height: calc(100vh - 200px);
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 2rem;
+        align-items: start;
+    }
+
+    .quiz-sidebar {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+        animation: slideInLeft 0.6s ease;
+    }
+
+    .quiz-sidebar h3 {
+        color: #1a1a2e;
+        margin-bottom: 1.5rem;
+        font-size: 1.2rem;
+    }
+
+    .quiz-progress {
+        margin-bottom: 2rem;
+    }
+
+    .progress-text {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 10px;
+        background: #e2e8f0;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #667eea, #764ba2);
+        width: 0%;
+        transition: width 0.3s ease;
+        border-radius: 10px;
+    }
+
+    .quiz-topics {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .topic-item {
+        padding: 0.75rem;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border-left: 3px solid #e2e8f0;
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .topic-item.active {
+        background: linear-gradient(135deg, #f8f9ff, #e5f9e8);
+        border-left-color: #667eea;
+        color: #667eea;
+        font-weight: 600;
+    }
+
+    .topic-item.completed {
+        border-left-color: #00d084;
+        color: #2f7c3f;
+    }
+
+    .quiz-container {
+        background: white;
+        border-radius: 15px;
+        padding: 3rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        animation: fadeInUp 0.6s ease;
+    }
+
+    .quiz-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .quiz-header h1 {
+        color: #1a1a2e;
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .quiz-header p {
+        color: #a0aec0;
+        font-size: 0.95rem;
+    }
+
+    .question-number {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .quiz-question {
+        display: none;
+        animation: fadeInUp 0.4s ease;
+    }
+
+    .quiz-question.active {
+        display: block;
+    }
+
+    .quiz-question h2 {
+        color: #1a1a2e;
+        font-size: 1.5rem;
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+    }
+
+    .options-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+        margin-bottom: 3rem;
+    }
+
+    .option-radio {
+        display: flex;
+        align-items: flex-start;
+        padding: 1.25rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        background: #f8f9ff;
+    }
+
+    .option-radio:hover {
+        border-color: #667eea;
+        background: linear-gradient(135deg, #f8f9ff, #e5e9ff);
+        transform: translateX(5px);
+    }
+
+    .option-radio input[type="radio"] {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 28px;
+        height: 28px;
+        border: 3px solid #667eea;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-right: 1.25rem;
+        margin-top: 0.2rem;
+        flex-shrink: 0;
+        position: relative;
+        background: white;
+        transition: all 0.3s ease;
+    }
+
+    .option-radio input[type="radio"]:checked {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        box-shadow: 0 0 0 6px rgba(102, 126, 234, 0.1);
+    }
+
+    .option-radio input[type="radio"]:checked::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .option-label {
+        color: #1a1a2e;
+        cursor: pointer;
+        flex: 1;
+        font-weight: 500;
+        line-height: 1.5;
+    }
+
+    .option-radio input[type="radio"]:checked + .option-label {
+        color: #667eea;
+        font-weight: 600;
+    }
+
+    .quiz-controls {
+        display: flex;
+        gap: 1rem;
+        justify-content: space-between;
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: 2px solid #e2e8f0;
+    }
+
+    .btn-nav {
+        padding: 1rem 2rem;
+        border: 2px solid #667eea;
+        background: white;
+        color: #667eea;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+        background: #667eea;
+        color: white;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-nav:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+
+    .btn-submit {
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-submit:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.5);
+    }
+
+    .quiz-complete {
+        display: none;
+        text-align: center;
+        padding: 3rem;
+    }
+
+    .quiz-complete.show {
+        display: block;
+        animation: fadeInUp 0.5s ease;
+    }
+
+    .quiz-complete h2 {
+        color: #1a1a2e;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .quiz-complete p {
+        color: #666;
+        margin-bottom: 2rem;
+        font-size: 1.05rem;
+    }
+
+    .loader {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 2rem 0;
+    }
+
+    @media (max-width: 1024px) {
+        .quiz-wrapper {
+            grid-template-columns: 1fr;
+        }
+
+        .quiz-sidebar {
+            position: relative;
+            top: 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .quiz-container {
+            padding: 2rem;
+        }
+
+        .quiz-wrapper {
+            padding: 1rem;
+        }
+
+        .quiz-controls {
+            flex-direction: column;
+        }
+
+        .btn-nav, .btn-submit {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="quiz-wrapper">
+    <!-- Sidebar Progress -->
+    <div class="quiz-sidebar">
+        <h3>📊 Quiz Progress</h3>
+        
+        <div class="quiz-progress">
+            <div class="progress-text">
+                <span>Completed</span>
+                <span><strong id="answeredCount">0</strong>/12</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="quiz-topics">
+            <div class="topic-item active" data-question="0">Q1: Academic Strength</div>
+            <div class="topic-item" data-question="1">Q2: College Facilities</div>
+            <div class="topic-item" data-question="2">Q3: College Type</div>
+            <div class="topic-item" data-question="3">Q4: Career Goals</div>
+            <div class="topic-item" data-question="4">Q5: College Ranking</div>
+            <div class="topic-item" data-question="5">Q6: Exam Performance</div>
+            <div class="topic-item" data-question="6">Q7: Location Preference</div>
+            <div class="topic-item" data-question="7">Q8: Campus Life</div>
+            <div class="topic-item" data-question="8">Q9: Placement Goals</div>
+            <div class="topic-item" data-question="9">Q10: Govt College Preference</div>
+            <div class="topic-item" data-question="10">Q11: Budget</div>
+            <div class="topic-item" data-question="11">Q12: Final Goal</div>
+        </div>
+    </div>
+
+    <!-- Main Quiz -->
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <h1>🎯 College Recommendation Quiz</h1>
+            <p style="color: #00d9ff; font-weight: 600;">Hello, {{ user_data.name }}! Find Your Best College</p>
+            <p>12 detailed questions to recommend the perfect college for your profile</p>
+        </div>
+
+        <form id="quizForm">
+            <div class="question-number" id="questionCounter">Question 1 of 12</div>
+            <div id="quizContainer"></div>
+
+            <div class="quiz-controls">
+                <button type="button" class="btn-nav" id="prevBtn" onclick="previousQuestion()" disabled>
+                    ← Previous
+                </button>
+                <button type="button" class="btn-nav" id="nextBtn" onclick="nextQuestion()">
+                    Next →
+                </button>
+                <button type="submit" class="btn-submit" id="submitBtn" style="display: none;">
+                    ✓ Submit Quiz
+                </button>
+            </div>
+        </form>
+
+        <div class="quiz-complete" id="quizComplete">
+            <h2>🔄 Processing Your Results...</h2>
+            <div class="loader"></div>
+            <p>Analyzing your answers and generating personalized recommendations...</p>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Pass user data to quiz.js
+    const userData = {
+        name: "{{ user_data.name }}",
+        classLevel: "{{ user_data.class_level }}",
+        academicPercentage: {{ user_data.academic_percentage }},
+        stream: "{{ user_data.stream }}",
+        difficultyLevel: "{{ user_data.subject_level }}"
+    };
+    
+    console.log('User taking quiz:', userData);
+</script>
+<script src="{{ url_for('static', filename='js/quiz.js') }}"></script>
+<script>
+    // Advanced sidebar interactions
+    document.querySelectorAll('.topic-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const questionIdx = parseInt(this.getAttribute('data-question'));
+            currentIndex = questionIdx;
+            renderQuestion(currentIndex);
+            updateProgress();
+            
+            // Update sidebar
+            document.querySelectorAll('.topic-item').forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+</script>
+{% endblock %}

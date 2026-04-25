@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Server Error - EduPath{% endblock %}
+
+{% block extra_css %}
+<style>
+    .error-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 200px);
+        text-align: center;
+    }
+
+    .error-content {
+        padding: 2rem;
+    }
+
+    .error-code {
+        font-size: 5rem;
+        font-weight: bold;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+    }
+
+    .error-message {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .error-description {
+        color: #666;
+        margin-bottom: 2rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-content">
+        <div class="error-code">500</div>
+        <div class="error-message">Server Error</div>
+        <div class="error-description">Something went wrong on our end. Please try again later.</div>
+        <a href="{{ url_for('landing') }}" class="btn btn-primary">Go Back Home</a>
+    </div>
+</div>
+{% endblock %}

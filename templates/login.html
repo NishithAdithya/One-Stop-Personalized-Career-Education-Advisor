@@ -1,0 +1,359 @@
+{% extends "base.html" %}
+
+{% block title %}Login - EduPath{% endblock %}
+
+{% block extra_css %}
+<style>
+    .login-wrapper {
+        min-height: calc(100vh - 200px);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: center;
+        padding: 3rem 2rem;
+    }
+
+    .login-showcase {
+        color: var(--text-light);
+        animation: slideInLeft 0.8s ease;
+    }
+
+    .login-showcase h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: rgb(0, 0, 0);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .login-showcase p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        color: var(--text-light);
+        line-height: 1.8;
+    }
+
+    .feature-list {
+        list-style: none;
+    }
+
+    .feature-list li {
+        margin: 1rem 0;
+        font-size: 1.05rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: var(--text-light);
+    }
+
+    .feature-list li:before {
+        content: "✓";
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        background: rgba(46,30,70,0.06);
+        border-radius: 50%;
+        font-weight: bold;
+        flex-shrink: 0;
+        color: var(--text-light);
+    }
+
+    .login-card {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        animation: slideInRight 0.8s ease;
+    }
+
+    .login-card h2 {
+        color: #1a1a2e;
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+
+    .login-card .subtitle {
+        text-align: center;
+        color: #555;
+        margin-bottom: 2.5rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.7rem;
+        color: #1a1a2e;
+        font-weight: 700;
+        font-size: 0.95rem;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 1rem !important;
+        border: 2px solid #e2e8f0 !important;
+        border-radius: 10px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #ffffff !important;
+        color: #1a1a2e !important;
+        font-weight: 500;
+        box-shadow: none !important;
+        -webkit-text-fill-color: #1a1a2e !important;
+    }
+
+    .form-group input:-webkit-autofill,
+    .form-group input:-webkit-autofill:hover,
+    .form-group input:-webkit-autofill:focus,
+    .form-group input:-webkit-autofill:active {
+        -webkit-box-shadow: 0 0 0 30px white inset !important;
+        -webkit-text-fill-color: #1a1a2e !important;
+        color: #1a1a2e !important;
+    }
+
+    .form-group input::placeholder {
+        color: #a0aec0 !important;
+        font-weight: 400;
+        opacity: 1;
+    }
+
+    .form-group input:focus {
+        outline: none !important;
+        border-color: #667eea !important;
+        background: #ffffff !important;
+        box-shadow: 0 0 0 5px rgba(102, 126, 234, 0.1) !important;
+        transform: translateY(-2px);
+        color: #1a1a2e !important;
+        -webkit-text-fill-color: #1a1a2e !important;
+    }
+
+    .form-group input:active {
+        background: #ffffff !important;
+        color: #1a1a2e !important;
+        -webkit-text-fill-color: #1a1a2e !important;
+    }
+
+    .demo-info {
+        background: linear-gradient(135deg, #f8f9ff, #e5f9e8);
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        border-left: 5px solid #667eea;
+        animation: fadeInUp 0.7s ease 0.2s both;
+    }
+
+    .demo-info strong {
+        color: #667eea;
+        display: block;
+        margin-bottom: 0.8rem;
+        font-size: 0.95rem;
+        font-weight: 700;
+    }
+
+    .demo-info p {
+        margin: 0.4rem 0;
+        font-size: 0.9rem;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .demo-user {
+        margin: 0.5rem 0;
+        padding: 0.5rem;
+        background: white;
+        border-radius: 6px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.85rem;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .demo-user code {
+        color: #667eea;
+        font-weight: 700;
+        background: #f0f4ff;
+        padding: 2px 4px;
+        border-radius: 3px;
+    }
+
+    .divider {
+        display: flex;
+        align-items: center;
+        margin: 2rem 0;
+        color: #cbd5e0;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        flex: 1;
+        height: 2px;
+        background: #e2e8f0;
+    }
+
+    .divider span {
+        padding: 0 1rem;
+        font-size: 0.9rem;
+        color: #a0aec0;
+    }
+
+    .alert {
+        padding: 1.25rem;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+        border-left: 5px solid;
+    }
+
+    .alert-error {
+        background: linear-gradient(135deg, #ffe5e5, #ffcccc);
+        color: #c92a2a;
+        border-left-color: #ff6b6b;
+    }
+
+    .alert-success {
+        background: linear-gradient(135deg, #e5f9e8, #ccf0d6);
+        color: #2f7c3f;
+        border-left-color: #00d084;
+    }
+
+    .help-text {
+        text-align: center;
+        margin-top: 2rem;
+        font-size: 0.9rem;
+        color: #333;
+        font-weight: 600;
+    }
+
+    .help-text strong {
+        color: #667eea;
+        font-weight: 700;
+    }
+
+    @media (max-width: 1024px) {
+        .login-wrapper {
+            grid-template-columns: 1fr;
+        }
+
+        .login-showcase {
+            display: none;
+        }
+
+        .login-card {
+            max-width: 450px;
+            margin: 0 auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .login-card {
+            padding: 2rem;
+            border-radius: 16px;
+        }
+
+        .login-card h2 {
+            font-size: 1.8rem;
+        }
+
+        .form-group input {
+            padding: 0.875rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-wrapper">
+    <!-- Left Showcase -->
+    <div class="login-showcase">
+        <h1>Welcome to EduPath</h1>
+        <p>Your personalized career guidance platform for choosing the right stream, degree, and college.</p>
+        
+        <ul class="feature-list">
+            <li>📋 Smart Aptitude Quiz</li>
+            <li>🎓 Degree & Career Mapping</li>
+            <li>🏛️ Government College Finder</li>
+            <li>📊 Personalized Analysis</li>
+        </ul>
+    </div>
+
+    <!-- Login Form -->
+    <div class="login-card">
+        <h2>Login</h2>
+        <p class="subtitle">Save your progress and get personalized guidance</p>
+
+        {% if error %}
+        <div class="alert alert-error">
+            <strong>⚠️ Login Failed</strong><br>
+            {{ error }}
+        </div>
+        {% endif %}
+
+        {% if success %}
+        <div class="alert alert-success">
+            <strong>✓ Success</strong><br>
+            {{ success }}
+        </div>
+        {% endif %}
+
+        <!-- Demo Users Info -->
+        <div class="demo-info">
+            <strong>🔑 Demo Accounts Available:</strong>
+            {% for user in demo_users %}
+            <div class="demo-user">
+                Email: <code>{{ user.email }}</code><br>
+                Password: <code>{{ user.password }}</code><br>
+                Name: <code>{{ user.name }}</code>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Login Form -->
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="form-group">
+                <label for="identifier">📧 Email Address</label>
+                <input 
+                    type="email" 
+                    id="identifier" 
+                    name="identifier" 
+                    placeholder="student@example.com" 
+                    required
+                    autofocus
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">🔐 Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    placeholder="Enter your password" 
+                    required
+                >
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.9rem 2rem; margin-bottom: 1rem;">🚀 Login Now</button>
+        </form>
+
+        <!-- Divider -->
+        <div class="divider">
+            <span>OR</span>
+        </div>
+
+        <!-- Guest Option -->
+        <a href="{{ url_for('guest') }}" class="btn btn-primary" style="width: 100%; justify-content: center; padding: 0.9rem 2rem;">👤 Continue as Guest</a>
+
+        <!-- Help Text -->
+        <p class="help-text">
+            New user? <strong><a href="{{ url_for('signup') }}" style="color: #667eea; text-decoration: none;">Create an account</a></strong><br>
+            or continue as guest to explore
+        </p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,811 @@
+{% extends "base.html" %}
+
+{% block title %}Career Paths - EduPath{% endblock %}
+
+{% block extra_css %}
+<style>
+    .career-wrapper {
+        padding: 2rem;
+        min-height: calc(100vh - 200px);
+        background: linear-gradient(135deg, #2d1b69 0%, #1f1a4a 50%, #0f0f2e 100%);
+    }
+
+    .career-header {
+        text-align: center;
+        margin-bottom: 4rem;
+        animation: fadeInDown 0.8s ease-out;
+    }
+
+    .career-header h1 {
+        color: #00d9ff;
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        font-weight: 900;
+    }
+
+    .career-header p {
+        color: #b0c4ff;
+        font-size: 1.2rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .careers-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 2.5rem;
+    }
+
+    .career-card {
+        background: rgba(74, 144, 226, 0.1);
+        border: 2px solid rgba(0, 217, 255, 0.3);
+        border-radius: 20px;
+        padding: 2.5rem;
+        transition: all 0.4s ease;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .career-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .career-card:hover {
+        transform: translateY(-10px);
+        border-color: rgba(0, 217, 255, 0.6);
+        box-shadow: 0 20px 50px rgba(74, 144, 226, 0.3);
+    }
+
+    .career-card:hover::before {
+        left: 100%;
+    }
+
+    .career-icon {
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .career-card h3 {
+        color: #4a90e2;
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+        font-weight: 900;
+    }
+
+    .career-description {
+        color: #b0c4ff;
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+    }
+
+    .career-info {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        padding: 0.8rem;
+        background: rgba(45, 27, 105, 0.5);
+        border-radius: 10px;
+        border-left: 3px solid #00d9ff;
+    }
+
+    .info-label {
+        color: #00d9ff;
+        font-weight: 700;
+        min-width: 90px;
+    }
+
+    .info-value {
+        color: #ffffff;
+        font-size: 0.9rem;
+    }
+
+    .salary-badge {
+        display: inline-block;
+        background: linear-gradient(135deg, #4a90e2 0%, #00d9ff 100%);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+    }
+
+    .skills-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        margin-top: 1rem;
+    }
+
+    .skill-tag {
+        background: rgba(0, 217, 255, 0.2);
+        color: #00d9ff;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border: 1px solid rgba(0, 217, 255, 0.4);
+    }
+
+    .explore-btn {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 50px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+    }
+
+    .explore-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(74, 144, 226, 0.4);
+    }
+
+    .stream-filter {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .stream-selector {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 1.5rem;
+    }
+
+    .stream-btn {
+        padding: 0.8rem 1.5rem;
+        border: 2px solid #4a90e2;
+        background: transparent;
+        color: #4a90e2;
+        border-radius: 50px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .stream-btn.active {
+        background: #4a90e2;
+        color: white;
+    }
+
+    .stream-btn:hover {
+        border-color: #00d9ff;
+        color: #00d9ff;
+    }
+
+    .job-outlook {
+        background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(74, 144, 226, 0.1));
+        padding: 1rem;
+        border-radius: 10px;
+        border-left: 4px solid #00d9ff;
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        color: #b0c4ff;
+    }
+
+    .stream-group {
+        display: none;
+        width: 100%;
+    }
+
+    .stream-group.active {
+        display: block;
+    }
+
+    .stream-title {
+        color: #4a90e2;
+        font-size: 2.2rem;
+        font-weight: 900;
+        margin-bottom: 2rem;
+        text-align: center;
+        border-bottom: 3px solid #00d9ff;
+        padding-bottom: 1rem;
+    }
+
+    .stream-careers {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 2rem;
+        margin-bottom: 3rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .career-header h1 {
+            font-size: 2rem;
+        }
+
+        .careers-container {
+            grid-template-columns: 1fr;
+        }
+
+        .stream-selector {
+            flex-direction: column;
+        }
+
+        .stream-btn {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="career-wrapper">
+    <!-- Header -->
+    <div class="career-header">
+        <h1>🚀 Explore Career Paths</h1>
+        <p>Discover exciting career opportunities across different streams and sectors. Learn about job roles, salary expectations, required skills, and future growth prospects.</p>
+    </div>
+
+    <!-- Stream Filter -->
+    <div class="stream-filter">
+        <h3 style="color: #00d9ff; margin-bottom: 1rem;">Filter by Stream</h3>
+        <div class="stream-selector">
+            <button class="stream-btn active" onclick="filterByStream('all')">All Streams</button>
+            <button class="stream-btn" onclick="filterByStream('engineering')">Engineering</button>
+            <button class="stream-btn" onclick="filterByStream('science')">Science</button>
+            <button class="stream-btn" onclick="filterByStream('commerce')">Commerce</button>
+            <button class="stream-btn" onclick="filterByStream('arts')">Arts</button>
+        </div>
+    </div>
+
+    <!-- Career Cards Grouped by Stream -->
+    <div class="careers-container" id="careersContainer">
+        
+        <!-- ============ ENGINEERING STREAM ============ -->
+        <div class="stream-group" data-stream="engineering">
+            <h2 class="stream-title">🔧 Engineering & Technology</h2>
+            
+            <div class="stream-careers">
+                <!-- Software Engineer -->
+                <div class="career-card" data-stream="engineering" data-course="Engineering">
+                    <div class="career-icon">💻</div>
+                    <h3>Software Engineer</h3>
+                    <p class="career-description">Design, develop, and maintain software applications and systems for various industries.</p>
+                    <div class="salary-badge">₹6 - 20+ LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">Very High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">20% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Java/Python</span>
+                        <span class="skill-tag">Web Dev</span>
+                        <span class="skill-tag">Problem Solving</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Excellent - Tech industry is booming with endless opportunities.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Engineering')">Explore This Career →</button>
+                </div>
+
+                <!-- Mechanical Engineer -->
+                <div class="career-card" data-stream="engineering" data-course="Engineering">
+                    <div class="career-icon">⚙️</div>
+                    <h3>Mechanical Engineer</h3>
+                    <p class="career-description">Design and develop mechanical equipment, machinery, and mechanical systems.</p>
+                    <div class="salary-badge">₹4 - 15 LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">12% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">CAD Design</span>
+                        <span class="skill-tag">Manufacturing</span>
+                        <span class="skill-tag">Physics</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Good - Automotive and manufacturing sectors offer stable careers.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Engineering')">Explore This Career →</button>
+                </div>
+
+                <!-- Civil Engineer -->
+                <div class="career-card" data-stream="engineering" data-course="Engineering">
+                    <div class="career-icon">🏗️</div>
+                    <h3>Civil Engineer</h3>
+                    <p class="career-description">Plan, design, and oversee construction of infrastructure projects like buildings and roads.</p>
+                    <div class="salary-badge">₹4 - 12 LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">15% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Project Management</span>
+                        <span class="skill-tag">Structural Design</span>
+                        <span class="skill-tag">AutoCAD</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Excellent - Infrastructure development creates numerous opportunities.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Engineering')">Explore This Career →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ SCIENCE STREAM ============ -->
+        <div class="stream-group" data-stream="science">
+            <h2 class="stream-title">🔬 Science Stream</h2>
+            
+            <div class="stream-careers">
+                <!-- Doctor/Physician -->
+                <div class="career-card" data-stream="science" data-course="Science">
+                    <div class="career-icon">🏥</div>
+                    <h3>Doctor/Physician</h3>
+                    <p class="career-description">Diagnose and treat diseases, provide medical care and advice to patients.</p>
+                    <div class="salary-badge">₹12 - 50+ LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">Very High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">15% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Medical Knowledge</span>
+                        <span class="skill-tag">Diagnosis</span>
+                        <span class="skill-tag">Patient Care</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Excellent - Healthcare is always in high demand.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Science')">Explore This Career →</button>
+                </div>
+
+                <!-- Surgeon -->
+                <div class="career-card" data-stream="science" data-course="Science">
+                    <div class="career-icon">🔪</div>
+                    <h3>Surgeon</h3>
+                    <p class="career-description">Perform surgical operations, treat injuries and diseases requiring surgical intervention.</p>
+                    <div class="salary-badge">₹15 - 60+ LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">Very High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">12% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Surgical Skills</span>
+                        <span class="skill-tag">Precision</span>
+                        <span class="skill-tag">Decision Making</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Excellent - Specialized medical services in high demand.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Science')">Explore This Career →</button>
+                </div>
+
+                <!-- Pharmacist -->
+                <div class="career-card" data-stream="science" data-course="Pharmacy">
+                    <div class="career-icon">�</div>
+                    <h3>Pharmacist</h3>
+                    <p class="career-description">Dispense medications, advise patients on drug usage, and ensure safe pharmaceutical practices.</p>
+                    <div class="salary-badge">₹5 - 16 LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">13% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Medicine Knowledge</span>
+                        <span class="skill-tag">Customer Service</span>
+                        <span class="skill-tag">Attention to Detail</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Excellent - Healthcare sector always needs skilled pharmacists.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Pharmacy')">Explore This Career →</button>
+                </div>
+
+                <!-- Data Scientist -->
+                <div class="career-card" data-stream="science" data-course="BCA">
+                    <div class="career-icon">�</div>
+                    <h3>Data Scientist</h3>
+                    <p class="career-description">Analyze complex datasets to help organizations make data-driven decisions.</p>
+                    <div class="salary-badge">₹8 - 25+ LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">Very High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">25% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Python/R</span>
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">Statistics</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Exceptional - Every company needs data scientists now!
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('BCA')">Explore This Career →</button>
+                </div>
+
+                <!-- Research Scientist -->
+                <div class="career-card" data-stream="science" data-course="Science">
+                    <div class="career-icon">🧬</div>
+                    <h3>Research Scientist</h3>
+                    <p class="career-description">Conduct scientific research to advance knowledge in biology, chemistry, or physics.</p>
+                    <div class="salary-badge">₹8 - 22 LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">11% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Research Methods</span>
+                        <span class="skill-tag">Data Analysis</span>
+                        <span class="skill-tag">Lab Work</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Good - Research institutions and tech companies actively hiring.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Science')">Explore This Career →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ COMMERCE STREAM ============ -->
+        <div class="stream-group" data-stream="commerce">
+            <h2 class="stream-title">💰 Commerce & Finance</h2>
+            
+            <div class="stream-careers">
+                <!-- Chartered Accountant -->
+                <div class="career-card" data-stream="commerce" data-course="Commerce">
+                    <div class="career-icon">💼</div>
+                    <h3>Chartered Accountant</h3>
+                    <p class="career-description">Manage financial records and provide taxation and financial planning advice to clients.</p>
+                    <div class="salary-badge">₹5 - 25 LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">12% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Accounting</span>
+                        <span class="skill-tag">Taxation</span>
+                        <span class="skill-tag">Financial Analysis</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Stable - Always in demand for finance management.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Commerce')">Explore This Career →</button>
+                </div>
+
+                <!-- Financial Analyst -->
+                <div class="career-card" data-stream="commerce" data-course="Commerce">
+                    <div class="career-icon">�</div>
+                    <h3>Financial Analyst</h3>
+                    <p class="career-description">Analyze financial data and provide investment recommendations to help organizations make strategic decisions.</p>
+                    <div class="salary-badge">₹6 - 20 LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">Very High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">14% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Excel/Data Analysis</span>
+                        <span class="skill-tag">Financial Modeling</span>
+                        <span class="skill-tag">Critical Thinking</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Excellent - Finance sector offers lucrative career opportunities.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Commerce')">Explore This Career →</button>
+                </div>
+
+                <!-- Business Manager -->
+                <div class="career-card" data-stream="commerce" data-course="Commerce">
+                    <div class="career-icon">�</div>
+                    <h3>Business Manager</h3>
+                    <p class="career-description">Oversee business operations, manage teams, and drive organizational goals and profitability.</p>
+                    <div class="salary-badge">₹8 - 25 LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">Very High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">16% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Leadership</span>
+                        <span class="skill-tag">Strategic Planning</span>
+                        <span class="skill-tag">Decision Making</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Excellent - All organizations need effective managers.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Commerce')">Explore This Career →</button>
+                </div>
+
+                <!-- Management Consultant -->
+                <div class="career-card" data-stream="commerce" data-course="Commerce">
+                    <div class="career-icon">�</div>
+                    <h3>Management Consultant</h3>
+                    <p class="career-description">Help businesses improve their operations and solve complex business problems.</p>
+                    <div class="salary-badge">₹6 - 30+ LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">Very High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">18% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Business Analysis</span>
+                        <span class="skill-tag">Problem Solving</span>
+                        <span class="skill-tag">Communication</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Excellent - Every company needs business guidance.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Commerce')">Explore This Career →</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ ARTS STREAM ============ -->
+        <div class="stream-group" data-stream="arts">
+            <h2 class="stream-title">📚 Arts & Humanities</h2>
+            
+            <div class="stream-careers">
+                <!-- Lawyer -->
+                <div class="career-card" data-stream="arts" data-course="Law">
+                    <div class="career-icon">⚖️</div>
+                    <h3>Lawyer</h3>
+                    <p class="career-description">Provide legal advice, represent clients in court, and help with legal documentation.</p>
+                    <div class="salary-badge">₹4 - 25+ LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">10% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Legal Knowledge</span>
+                        <span class="skill-tag">Argumentation</span>
+                        <span class="skill-tag">Research</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Excellent - Legal services always in demand.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Law')">Explore This Career →</button>
+                </div>
+
+                <!-- Journalist -->
+                <div class="career-card" data-stream="arts" data-course="Arts">
+                    <div class="career-icon">📰</div>
+                    <h3>Journalist</h3>
+                    <p class="career-description">Investigate, report, and communicate news and stories to the public through various media.</p>
+                    <div class="salary-badge">₹3 - 18 LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">8% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Writing</span>
+                        <span class="skill-tag">Communication</span>
+                        <span class="skill-tag">Research</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Good - Digital media creating new opportunities in journalism.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Arts')">Explore This Career →</button>
+                </div>
+
+                <!-- Teacher/Educator -->
+                <div class="career-card" data-stream="arts" data-course="B.Ed">
+                    <div class="career-icon">🎓</div>
+                    <h3>Teacher/Educator</h3>
+                    <p class="career-description">Educate students, develop curriculum, and inspire the next generation with knowledge and values.</p>
+                    <div class="salary-badge">₹3 - 15 LPA</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">Very High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">12% annually</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Communication</span>
+                        <span class="skill-tag">Patience</span>
+                        <span class="skill-tag">Subject Knowledge</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Excellent - Education is always in demand globally.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('B.Ed')">Explore This Career →</button>
+                </div>
+
+                <!-- Civil Service Officer -->
+                <div class="career-card" data-stream="arts" data-course="Arts">
+                    <div class="career-icon">🏛️</div>
+                    <h3>Civil Service Officer (IAS/IPS)</h3>
+                    <p class="career-description">Serve the nation through administrative and law enforcement roles at state and national levels.</p>
+                    <div class="salary-badge">₹56K - 250K/month</div>
+                    <div class="career-info">
+                        <div class="info-item">
+                            <span class="info-label">Demand:</span>
+                            <span class="info-value">High 📈</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Growth:</span>
+                            <span class="info-value">Stable</span>
+                        </div>
+                    </div>
+                    <p style="color: #b0c4ff; font-size: 0.9rem;">Top Skills:</p>
+                    <div class="skills-list">
+                        <span class="skill-tag">Leadership</span>
+                        <span class="skill-tag">Public Service</span>
+                        <span class="skill-tag">Problem Solving</span>
+                    </div>
+                    <div class="job-outlook">
+                        <strong style="color: #00d9ff;">Job Outlook:</strong> Excellent - Prestigious career with job security.
+                    </div>
+                    <button class="explore-btn" onclick="exploreCourse('Arts')">Explore This Career →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Auto-filter by stream if provided
+    document.addEventListener('DOMContentLoaded', function() {
+        {% if stream %}
+        filterByStream('{{ stream }}');
+        {% endif %}
+        
+        // Show all by default
+        if (!('{{ stream }}')) {
+            filterByStream('all');
+        }
+    });
+
+    function filterByStream(stream) {
+        // Update button states
+        document.querySelectorAll('.stream-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.textContent.toLowerCase().replace(/\s/g, '') === stream.toLowerCase()) {
+                btn.classList.add('active');
+            }
+        });
+
+        // Filter stream groups
+        const groups = document.querySelectorAll('.stream-group');
+        groups.forEach(group => {
+            group.classList.remove('active');
+            if (stream === 'all') {
+                group.classList.add('active');
+            } else if (group.getAttribute('data-stream') === stream) {
+                group.classList.add('active');
+            }
+        });
+
+        // Also filter individual cards for backward compatibility
+        const cards = document.querySelectorAll('.career-card');
+        cards.forEach(card => {
+            if (stream === 'all' || card.getAttribute('data-stream') === stream) {
+                card.style.display = 'block';
+                setTimeout(() => card.style.opacity = '1', 0);
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    function exploreCourse(course) {
+        // Redirect to colleges page with course type filter
+        const stream = '{{ stream or session.get("quiz_stream", "") }}';
+        window.location.href = `{{ url_for('colleges') }}?stream=${encodeURIComponent(stream)}&course=${encodeURIComponent(course)}`;
+    }
+</script>
+{% endblock %}

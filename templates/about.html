@@ -1,0 +1,326 @@
+{% extends "base.html" %}
+
+{% block title %}About - EduPath{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-container {
+        max-width: 1100px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+    }
+
+    /* Hero Header */
+    .about-header {
+        background: linear-gradient(135deg, #2d1b69 0%, #1a0e47 100%);
+        background-attachment: fixed;
+        color: white;
+        padding: 4rem 2rem;
+        border-radius: 20px;
+        text-align: center;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(0, 217, 255, 0.2);
+    }
+
+    .about-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at top right, rgba(0, 217, 255, 0.1), transparent);
+        pointer-events: none;
+    }
+
+    .about-header-content {
+        position: relative;
+        z-index: 1;
+    }
+
+    .about-header h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #00d9ff;
+        font-weight: 800;
+        text-shadow: 0 2px 10px rgba(0, 217, 255, 0.3);
+    }
+
+    .about-header p {
+        font-size: 1.2rem;
+        line-height: 1.6;
+        color: #d4d9e8;
+        font-weight: 300;
+    }
+
+    /* Section Styling */
+    .about-section {
+        background: rgba(45, 27, 105, 0.6);
+        backdrop-filter: blur(10px);
+        padding: 2.5rem;
+        border-radius: 16px;
+        border: 1px solid rgba(0, 217, 255, 0.15);
+        margin-bottom: 2rem;
+        transition: all 0.3s ease;
+    }
+
+    .about-section:hover {
+        border-color: rgba(0, 217, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 217, 255, 0.1);
+    }
+
+    .about-section h2 {
+        color: #00d9ff;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid rgba(0, 217, 255, 0.3);
+        padding-bottom: 1rem;
+        font-weight: 700;
+    }
+
+    .about-section h3 {
+        color: #7bb3ff;
+        margin-top: 1.5rem;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+    }
+
+    .about-section p {
+        color: #d4d9e8;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+    }
+
+    .about-section ul {
+        list-style-position: inside;
+        color: #d4d9e8;
+        line-height: 1.9;
+    }
+
+    .about-section ul li {
+        margin-bottom: 0.75rem;
+        margin-left: 1rem;
+    }
+
+    .about-section ul li::marker {
+        color: #00d9ff;
+        font-weight: bold;
+    }
+
+    /* Features Grid */
+    .features-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .feature-box {
+        background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(74, 144, 226, 0.1));
+        padding: 2rem;
+        border-radius: 12px;
+        border: 1px solid rgba(0, 217, 255, 0.2);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .feature-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(0, 217, 255, 0.1), transparent);
+        transition: left 0.5s ease;
+    }
+
+    .feature-box:hover {
+        border-color: rgba(0, 217, 255, 0.4);
+        background: linear-gradient(135deg, rgba(0, 217, 255, 0.15), rgba(74, 144, 226, 0.15));
+        transform: translateY(-5px);
+    }
+
+    .feature-box:hover::before {
+        left: 100%;
+    }
+
+    .feature-box h4 {
+        color: #00d9ff;
+        margin-bottom: 0.75rem;
+        font-size: 1.2rem;
+        font-weight: 700;
+        position: relative;
+        z-index: 1;
+    }
+
+    .feature-box p {
+        color: #d4d9e8;
+        font-size: 0.95rem;
+        position: relative;
+        z-index: 1;
+        line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .about-header h1 {
+            font-size: 2rem;
+        }
+
+        .about-header p {
+            font-size: 1rem;
+        }
+
+        .about-section {
+            padding: 1.5rem;
+        }
+
+        .about-section h2 {
+            font-size: 1.5rem;
+        }
+
+        .features-list {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <!-- Header -->
+    <div class="about-header">
+        <div class="about-header-content">
+            <h1>✨ About EduPath</h1>
+            <p>Empowering the next generation of students to make informed career decisions</p>
+        </div>
+    </div>
+
+    <!-- Mission Section -->
+    <div class="about-section">
+        <h2>🎯 Our Mission</h2>
+        <p>
+            EduPath is dedicated to revolutionizing career guidance for Class 10 and 12 students in India. 
+            We believe every student deserves access to personalized, data-driven career counseling to help them 
+            choose the right stream, degree program, and educational institution.
+        </p>
+        <p>
+            Our mission is to bridge the gap between student potential and career clarity, ensuring that 
+            no talented student makes career choices out of confusion or lack of information.
+        </p>
+    </div>
+
+    <!-- Vision Section -->
+    <div class="about-section">
+        <h2>🚀 Our Vision</h2>
+        <p>
+            To become India's most trusted career guidance platform, helping millions of students 
+            unlock their full potential and build successful, fulfilling careers.
+        </p>
+    </div>
+
+    <!-- Why It Matters -->
+    <div class="about-section">
+        <h2>❓ Why This Matters</h2>
+        <p>
+            Every year, thousands of Class 10 and 12 students face a critical decision: 
+            which stream should I choose? This decision impacts the next decade of their academic and 
+            professional life. Yet, many students make this choice based on:
+        </p>
+        <ul>
+            <li>Peer pressure or family expectations</li>
+            <li>Limited information about career options</li>
+            <li>Lack of proper aptitude assessment</li>
+            <li>No guidance on college selection</li>
+        </ul>
+        <p style="margin-top: 1rem;">
+            <strong>EduPath solves this</strong> by providing a science-backed aptitude quiz, 
+            personalized recommendations, and clear pathways to success.
+        </p>
+    </div>
+
+    <!-- Key Features -->
+    <div class="about-section">
+        <h2>✨ What We Offer</h2>
+        <div class="features-list">
+            <div class="feature-box">
+                <h4>Aptitude Quiz</h4>
+                <p>12-question scientifically designed assessment to evaluate your interests and strengths</p>
+            </div>
+            <div class="feature-box">
+                <h4>Stream Recommendations</h4>
+                <p>Get personalized recommendations for Science, Commerce, Arts, or Vocational streams</p>
+            </div>
+            <div class="feature-box">
+                <h4>Degree Pathways</h4>
+                <p>Discover degree programs that align with your chosen stream</p>
+            </div>
+            <div class="feature-box">
+                <h4>Career Insights</h4>
+                <p>Explore potential careers and salary information for your stream</p>
+            </div>
+            <div class="feature-box">
+                <h4>College Database</h4>
+                <p>Find top government colleges near you for your chosen stream</p>
+            </div>
+            <div class="feature-box">
+                <h4>Exam Guidance</h4>
+                <p>Get information on important entrance exams and preparation strategies</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works -->
+    <div class="about-section">
+        <h2>🔄 How It Works</h2>
+        <h3>Step 1: Assessment</h3>
+        <p>Take our quick 12-question aptitude quiz that evaluates your interests, strengths, and preferences.</p>
+        
+        <h3>Step 2: Analysis</h3>
+        <p>Our intelligent algorithm analyzes your responses and calculates your aptitude score for each stream.</p>
+        
+        <h3>Step 3: Recommendations</h3>
+        <p>Receive personalized recommendations including streams, degrees, careers, and relevant exams.</p>
+        
+        <h3>Step 4: Exploration</h3>
+        <p>Use our resources to explore colleges, connect with mentors, and plan your next steps.</p>
+    </div>
+
+    <!-- Technology -->
+    <div class="about-section">
+        <h2>💻 Technology Stack</h2>
+        <p>EduPath is built with modern web technologies:</p>
+        <ul>
+            <li><strong>Backend:</strong> Python with Flask framework</li>
+            <li><strong>Frontend:</strong> HTML, CSS, and Vanilla JavaScript</li>
+            <li><strong>Database:</strong> MySQL/PostgreSQL (scalable)</li>
+            <li><strong>Hosting:</strong> Cloud-based infrastructure</li>
+        </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="about-section">
+        <h2>📧 Get in Touch</h2>
+        <p>
+            Have questions or feedback? We'd love to hear from you!
+        </p>
+        <p>
+            <strong>Email:</strong> contact@edupath.com<br>
+            <strong>Phone:</strong> +91-XXXXXXXXXX<br>
+            <strong>Address:</strong> India
+        </p>
+    </div>
+
+    <!-- CTA -->
+    <div style="text-align: center; margin: 3rem 0;">
+        <a href="{{ url_for('quiz') }}" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.1rem;">
+            Ready to Discover Your Career Path? Take the Quiz →
+        </a>
+    </div>
+</div>
+{% endblock %}

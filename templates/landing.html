@@ -1,0 +1,427 @@
+{% extends "base.html" %}
+
+{% block title %}Home - EduPath Career Advisor{% endblock %}
+
+{% block content %}
+<style>
+    /* Hero Section */
+    .hero {
+        background: linear-gradient(135deg, #2d1b69 0%, #1f1a4a 50%, #0f0f2e 100%);
+        color: white;
+        padding: 8rem 2rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 20% 50%, rgba(74, 144, 226, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, rgba(0, 217, 255, 0.1) 0%, transparent 50%);
+        pointer-events: none;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+        font-weight: 900;
+        margin-bottom: 1.5rem;
+        background: linear-gradient(135deg, #00d9ff 0%, #4a90e2 50%, #ff006e 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -2px;
+        animation: fadeInDown 0.8s ease-out;
+    }
+
+    .hero p {
+        font-size: 1.3rem;
+        color: #b0c4ff;
+        margin-bottom: 2.5rem;
+        line-height: 1.6;
+        animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+
+    .hero-buttons {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+
+    .btn-hero {
+        padding: 15px 40px;
+        border: none;
+        border-radius: 50px;
+        font-weight: 800;
+        font-size: 1rem;
+        cursor: pointer;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn-primary-hero {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+    }
+
+    .btn-primary-hero:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(74, 144, 226, 0.4);
+    }
+
+    .btn-secondary-hero {
+        background: transparent;
+        color: #00d9ff;
+        border: 2px solid #00d9ff;
+    }
+
+    .btn-secondary-hero:hover {
+        background: #00d9ff;
+        color: #2d1b69;
+        transform: translateY(-3px);
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Features Section */
+    .features {
+        padding: 6rem 2rem;
+        background: linear-gradient(180deg, #1a1a3e 0%, #2d1b69 100%);
+        color: white;
+    }
+
+    .features-header {
+        text-align: center;
+        max-width: 800px;
+        margin: 0 auto 4rem;
+    }
+
+    .features-header h2 {
+        font-size: 2.8rem;
+        margin-bottom: 1rem;
+        color: #00d9ff;
+        font-weight: 900;
+    }
+
+    .features-header p {
+        font-size: 1.1rem;
+        color: #b0c4ff;
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2.5rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .feature-card {
+        background: rgba(74, 144, 226, 0.1);
+        border: 1px solid rgba(0, 217, 255, 0.3);
+        border-radius: 15px;
+        padding: 2.5rem;
+        text-align: center;
+        transition: all 0.4s ease;
+        cursor: pointer;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        background: rgba(74, 144, 226, 0.15);
+        border-color: rgba(0, 217, 255, 0.6);
+        box-shadow: 0 20px 40px rgba(74, 144, 226, 0.2);
+    }
+
+    .feature-icon {
+        font-size: 3.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: #4a90e2;
+        font-weight: 800;
+    }
+
+    .feature-card p {
+        color: #b0c4ff;
+        line-height: 1.6;
+        font-size: 0.95rem;
+    }
+
+    /* How It Works Section */
+    .how-it-works {
+        padding: 6rem 2rem;
+        background: linear-gradient(180deg, #2d1b69 0%, #1a1a3e 100%);
+        color: white;
+    }
+
+    .how-it-works h2 {
+        text-align: center;
+        font-size: 2.8rem;
+        margin-bottom: 4rem;
+        color: #00d9ff;
+        font-weight: 900;
+    }
+
+    .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .step-box {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(45, 27, 105, 0.7);
+        border-radius: 15px;
+        border: 1px solid rgba(74, 144, 226, 0.3);
+        position: relative;
+        transition: all 0.4s ease;
+    }
+
+    .step-box:hover {
+        transform: scale(1.05);
+        border-color: rgba(0, 217, 255, 0.6);
+        background: rgba(74, 144, 226, 0.15);
+    }
+
+    .step-number {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, #4a90e2 0%, #00d9ff 100%);
+        color: white;
+        border-radius: 50%;
+        line-height: 50px;
+        font-weight: 900;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .step-box h3 {
+        color: #4a90e2;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        font-weight: 800;
+    }
+
+    .step-box p {
+        color: #b0c4ff;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        padding: 5rem 2rem;
+        background: linear-gradient(135deg, #4a90e2 0%, #764ba2 100%);
+        text-align: center;
+        color: white;
+    }
+
+    .cta-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1.5rem;
+        font-weight: 900;
+    }
+
+    .cta-section p {
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .cta-button {
+        padding: 15px 50px;
+        background: white;
+        color: #4a90e2;
+        border: none;
+        border-radius: 50px;
+        font-weight: 900;
+        font-size: 1rem;
+        cursor: pointer;
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.4s ease;
+        display: inline-block;
+    }
+
+    .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero {
+            padding: 4rem 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+        }
+
+        .features-header h2,
+        .how-it-works h2 {
+            font-size: 2rem;
+        }
+
+        .features-grid,
+        .steps-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .hero-buttons {
+            flex-direction: column;
+        }
+
+        .btn-hero {
+            width: 100%;
+        }
+
+        .cta-section h2 {
+            font-size: 1.8rem;
+        }
+    }
+</style>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>🎓 Your Career Advisor Awaits</h1>
+        <p>Discover the perfect educational path tailored to your skills, interests, and aspirations. Take our intelligent aptitude quiz and unlock personalized college recommendations.</p>
+        <div class="hero-buttons">
+            <a href="{% if is_logged_in %}{{ url_for('quiz') }}{% else %}{{ url_for('login') }}{% endif %}" class="btn-hero btn-primary-hero">
+                {% if is_logged_in %}Start Quiz{% else %}Login to Start Quiz{% endif %}
+            </a>
+            <a href="#learn-more" class="btn-hero btn-secondary-hero">Learn More</a>
+            <a href="{{ url_for('about') }}" class="btn-hero btn-secondary-hero" style="border-color: #00d9ff; color: #00d9ff;">About</a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="features" id="learn-more">
+    <div class="features-header">
+        <h2>✨ Why Choose EduPath?</h2>
+        <p>Our comprehensive platform helps students make informed decisions about their educational future.</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🧠</div>
+            <h3>Smart Assessment</h3>
+            <p>Our advanced 12-question aptitude quiz analyzes your skills and interests to provide accurate stream recommendations.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🏛️</div>
+            <h3>27+ Colleges</h3>
+            <p>Explore comprehensive database of top engineering, arts, commerce, and professional colleges across regions.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Career Paths</h3>
+            <p>Discover detailed career information including salary expectations, job outlook, required skills, and growth prospects.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3>Personalized Paths</h3>
+            <p>Receive tailored recommendations for Engineering, Science, Commerce, Arts, or Vocational streams.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Easy Comparison</h3>
+            <p>Compare colleges side-by-side to find the perfect fit for your budget, location, and preferences.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">🌟</div>
+            <h3>Expert Guidance</h3>
+            <p>Make confident decisions with our comprehensive career guidance and educational resources.</p>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works" id="how-it-works">
+    <h2>🚀 How It Works</h2>
+    <div class="steps-grid">
+        <div class="step-box">
+            <div class="step-number">1</div>
+            <h3>Take Assessment</h3>
+            <p>Complete our intelligent 12-question aptitude quiz designed by educational experts.</p>
+        </div>
+        <div class="step-box">
+            <div class="step-number">2</div>
+            <h3>Get Analysis</h3>
+            <p>Receive detailed insights into your strengths, interests, and recommended academic streams.</p>
+        </div>
+        <div class="step-box">
+            <div class="step-number">3</div>
+            <h3>Find Colleges</h3>
+            <p>Explore colleges perfectly matched to your profile with complete information and rankings.</p>
+        </div>
+        <div class="step-box">
+            <div class="step-number">4</div>
+            <h3>Plan Future</h3>
+            <p>Create your personalized educational roadmap and prepare for your chosen path.</p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+    <h2>Ready to Find Your Perfect College?</h2>
+    <p>Join thousands of students who have discovered their ideal educational path through EduPath.</p>
+    <a href="{% if is_logged_in %}{{ url_for('quiz') }}{% else %}{{ url_for('login') }}{% endif %}" class="cta-button">
+        {% if is_logged_in %}Take Quiz Now{% else %}Get Started - Login First{% endif %}
+    </a>
+</section>
+
+{% endblock %}
